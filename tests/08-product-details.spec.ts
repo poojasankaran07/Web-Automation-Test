@@ -1,33 +1,10 @@
-import { Page, test, expect, BrowserContext } from '@playwright/test';
-import HomePage from '../pages/home-page';
-import RegisterUser from '../pages/register-user';
-import LoginPage from '../pages/login-page';
-import TestCasesPage from '../pages/test-cases';
-import ProductsPage from '../pages/product-details';
+import { test, expect } from '../fixtures/test-fixtures';
 import { expectUrl } from '../utils/helper';
 
-let context: BrowserContext;
-let page: Page;
-let registerPage: RegisterUser;
-let homePage: HomePage;
-let loginPage: LoginPage;
-let testCasesPage: TestCasesPage;
-let productsPage: ProductsPage;
-
-test.beforeAll(async ({ browser }) => {
-    context = await browser.newContext();
-    page = await context.newPage();
-    await page.goto('https://automationexercise.com/');
-    homePage = new HomePage(page);
-    registerPage = new RegisterUser(page);
-    loginPage = new LoginPage(page);
-    testCasesPage = new TestCasesPage(page);
-    productsPage = new ProductsPage(page);
-});
-
 test.describe('Verify All Products and product detail page', () => {
-    test('Verify All Products and product detail page Flow', async () => {
+    test('Verify All Products and product detail page Flow', async ({ page, homePage, productsPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
+            await page.goto('https://automationexercise.com/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

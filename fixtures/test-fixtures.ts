@@ -1,0 +1,52 @@
+import { test as base } from '@playwright/test';
+
+import HomePage from '../pages/home-page';
+import LoginPage from '../pages/login-page';
+import RegisterUser from '../pages/register-user';
+import TestCasesPage from '../pages/test-cases';
+import ProductsPage from '../pages/product-details';
+import SearchProduct from '../pages/search-product';
+import ContactUsPage from '../pages/contact-us';
+
+type Pages = {
+    homePage: HomePage;
+    loginPage: LoginPage;
+    registerPage: RegisterUser;
+    testCasesPage: TestCasesPage;
+    productsPage: ProductsPage;
+    searchProduct: SearchProduct;
+    contactUsPage: ContactUsPage;
+};
+
+export const test = base.extend<Pages>({
+
+    homePage: async ({ page }, use) => {
+        await use(new HomePage(page));
+    },
+
+    loginPage: async ({ page }, use) => {
+        await use(new LoginPage(page));
+    },
+
+    registerPage: async ({ page }, use) => {
+        await use(new RegisterUser(page));
+    },
+
+    testCasesPage: async ({ page }, use) => {
+        await use(new TestCasesPage(page));
+    },
+
+    productsPage: async ({ page }, use) => {
+        await use(new ProductsPage(page));
+    },
+
+    searchProduct: async ({ page }, use) => {
+        await use(new SearchProduct(page));
+    },
+
+    contactUsPage: async ({ page }, use) => {
+        await use(new ContactUsPage(page));
+    }
+});
+
+export { expect } from '@playwright/test';

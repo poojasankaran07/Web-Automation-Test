@@ -1,16 +1,5 @@
-import { Page, test, expect, BrowserContext } from '@playwright/test';
-import HomePage from '../pages/home-page';
-import RegisterUser from '../pages/register-user';
-import LoginPage from '../pages/login-page';
-import ContactUsPage from '../pages/contact-us';
+import { test, expect } from '../fixtures/test-fixtures';
 import { expectUrl } from '../utils/helper';
-
-let context: BrowserContext;
-let page: Page;
-let registerPage: RegisterUser;
-let homePage: HomePage;
-let loginPage: LoginPage
-let contactUsPage: ContactUsPage;
 
 const random = Math.floor(Math.random() * 100000);
 
@@ -21,19 +10,10 @@ const getInTouchText = {
     message: `Adding a message to get in touch with the team - ${random}`
 };
 
-test.beforeAll(async ({ browser }) => {
-    context = await browser.newContext();
-    page = await context.newPage();
-    await page.goto('https://automationexercise.com/');
-    homePage = new HomePage(page);
-    registerPage = new RegisterUser(page);
-    loginPage = new LoginPage(page);
-    contactUsPage = new ContactUsPage(page);
-});
-
 test.describe('Login User with correct email and password & Logout User', () => {
-    test('Verify Valid Login Flow & Logout Flow', async () => {
+    test('Verify Valid Login Flow & Logout Flow', async ({ page, homePage, contactUsPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
+            await page.goto('https://automationexercise.com/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

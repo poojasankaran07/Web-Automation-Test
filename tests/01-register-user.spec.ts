@@ -1,12 +1,6 @@
-import { Page, test, expect, BrowserContext } from '@playwright/test';
-import HomePage from '../pages/home-page';
-import RegisterUser from '../pages/register-user';
+import { test, expect } from '../fixtures/test-fixtures';
 import { expectUrl } from '../utils/helper';
 
-let page: Page;
-let registerPage: RegisterUser;
-let homePage: HomePage;
-let context: BrowserContext;
 
 const random = Math.floor(Math.random() * 100000);
 
@@ -24,17 +18,10 @@ const user = {
   mobileNumber: '9999999999'
 };
 
-test.beforeAll(async ({ browser }) => {
-  context = await browser.newContext();
-  page = await context.newPage();
-  await page.goto('https://automationexercise.com/');
-  homePage = new HomePage(page);
-  registerPage = new RegisterUser(page);
-});
-
 test.describe('User register Flow', () => {
-  test('Register User Flow', async () => {
+  test('Register User Flow', async ({ page, registerPage, homePage }) => {
     await test.step('Verify that home page is visible successfully', async () => {
+      await page.goto('https://automationexercise.com/');
       await expect(homePage.automationLogoImage).toBeVisible();
     })
 
