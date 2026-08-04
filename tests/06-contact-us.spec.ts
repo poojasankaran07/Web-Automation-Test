@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
+import { safeClick } from '../utils/helper';
 
 const random = Math.floor(Math.random() * 100000);
 
@@ -17,7 +18,7 @@ test.describe('Login User with correct email and password & Logout User', () => 
         })
 
         await test.step(`Click on 'Contact Us' button & verify 'GET IN TOUCH' is visible`, async () => {
-            await homePage.contactUs.click();
+            await safeClick(page, homePage.contactUs);
             await expect(contactUsPage.getInTouch).toBeVisible();
         })
 
@@ -43,12 +44,12 @@ test.describe('Login User with correct email and password & Logout User', () => 
                 dialog.accept();
             });
 
-            await contactUsPage.submitButton.click();
+            await safeClick(page, contactUsPage.submitButton);
             await expect(contactUsPage.submittedSuccessMessage).toBeVisible();
         })
 
         await test.step(`Click 'Home' button and verify that landed to home page successfully`, async () => {
-            await contactUsPage.homeButton.click();
+            await safeClick(page, contactUsPage.homeButton);
             await expect(homePage.automationLogoImage).toBeVisible();
         })
     })

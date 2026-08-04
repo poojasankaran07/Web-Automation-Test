@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
+import { safeClick } from '../utils/helper';
 
 test.describe('Verify All Products and product detail page', () => {
     test('Verify All Products and product detail page Flow', async ({ page, homePage, productsPage, cartPage }) => {
@@ -14,27 +15,27 @@ test.describe('Verify All Products and product detail page', () => {
         })
 
         await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
-            await homePage.products.click();
+            await safeClick(page, homePage.products);
         })
 
         await test.step(`Hover over first product and click 'Add to cart & click 'Continue Shopping' button'`, async () => {
             await productsPage.productCard(1).hover();
 
             const product1 = await productsPage.getProductDetails(1);
-            await productsPage.addToCart(1).click();
+            await safeClick(page, productsPage.addToCart(1));
             addedProducts.push(product1);
 
-            await productsPage.continueShopping.click();
+            await safeClick(page, productsPage.continueShopping);
         })
 
         await test.step(`Hover over second product and click 'Add to cart & click 'View Cart' button'`, async () => {
             await productsPage.productCard(2).hover();
 
             const product2 = await productsPage.getProductDetails(2);
-            await productsPage.addToCart(2).click();
+            await safeClick(page, productsPage.addToCart(2));
             addedProducts.push(product2);
 
-            await productsPage.viewCart.click();
+            await safeClick(page, productsPage.viewCart);
 
         })
 

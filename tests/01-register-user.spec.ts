@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
+import { safeClick } from '../utils/helper';
 
 const random = Math.floor(Math.random() * 100000);
 
@@ -24,14 +25,14 @@ test.describe('User register Flow', () => {
     })
 
     await test.step(`Click on 'Signup / Login' button & verify 'New User Signup!' is visible`, async () => {
-      await homePage.signupOrLogin.click();
+      await safeClick(page, homePage.signupOrLogin);
       await expect(registerPage.newUserSignup).toBeVisible();
     })
 
     await test.step(`Enter name and email address & click 'Signup' button to verify that 'ENTER ACCOUNT INFORMATION' is visible`, async () => {
       await registerPage.signupName.fill(user.name);
       await registerPage.signupEmail.fill(user.email);
-      await registerPage.signupButton.click();
+      await safeClick(page, registerPage.signupButton);
       await expect(registerPage.enterAccountInformation).toBeVisible();
     })
 
@@ -82,19 +83,19 @@ test.describe('User register Flow', () => {
     })
 
     await test.step(`Click 'Create Account button' & verify that 'ACCOUNT CREATED!' is visible`, async () => {
-      await registerPage.createAccountButton.click();
+      await safeClick(page, registerPage.createAccountButton);
       await expect(registerPage.accountCreated).toBeVisible();
     })
 
     await test.step(`Click 'Continue' button & verify that 'Logged in as username' is visible`, async () => {
-      await registerPage.continueButtonAfterAccountCreationAndDeletion.click();
+      await safeClick(page, registerPage.continueButtonAfterAccountCreationAndDeletion);
       await expect(homePage.loggedInUser).toContainText(`Logged in as ${user.name}`);
     })
 
     await test.step(`Click 'Delete Account' button`, async () => {
-      await homePage.deleteAccount.click();
+      await safeClick(page, homePage.deleteAccount);
       await expect(registerPage.accountDeleted).toBeVisible();
-      await registerPage.continueButtonAfterAccountCreationAndDeletion.click();
+      await safeClick(page, registerPage.continueButtonAfterAccountCreationAndDeletion);
       await expect(homePage.signupOrLogin).toBeVisible();
     })
   })

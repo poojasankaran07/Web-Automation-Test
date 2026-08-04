@@ -9,6 +9,7 @@ import SearchProduct from '../pages/search-product';
 import ContactUsPage from '../pages/contact-us';
 import SubscriptionPage from '../pages/subscription';
 import CartPage from '../pages/cart-page'
+import CheckoutPage from '../pages/checkout-page';
 
 type Pages = {
     homePage: HomePage;
@@ -20,6 +21,7 @@ type Pages = {
     contactUsPage: ContactUsPage;
     subscriptionPage: SubscriptionPage;
     cartPage: CartPage;
+    checkoutPage: CheckoutPage;
 };
 
 export const test = base.extend<Pages>({
@@ -58,6 +60,10 @@ export const test = base.extend<Pages>({
 
     cartPage: async ({ page }, use) => {
         await use(new CartPage(page));
+    },
+
+    checkoutPage: async ({ page }, use) => {
+        await use(new CheckoutPage(page));
     },
 });
 

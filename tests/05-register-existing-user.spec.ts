@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
+import { safeClick } from '../utils/helper';
 
 const existingUserDetail = {
     name: 'Existing UserTest',
@@ -14,14 +15,14 @@ test.describe('Register User with existing email', () => {
         })
 
         await test.step(`Click on 'Signup / Login' button & verify 'New User Signup!' is visible`, async () => {
-            await homePage.signupOrLogin.click();
+            await safeClick(page, homePage.signupOrLogin);
             await expect(registerPage.newUserSignup).toBeVisible();
         })
 
         await test.step(`Enter name and already registered email address`, async () => {
             await registerPage.signupName.fill(existingUserDetail.name);
             await registerPage.signupEmail.fill(existingUserDetail.email);
-            await registerPage.signupButton.click();
+            await safeClick(page, registerPage.signupButton);
             await expect(registerPage.emailExistError).toBeVisible();
         })
     })

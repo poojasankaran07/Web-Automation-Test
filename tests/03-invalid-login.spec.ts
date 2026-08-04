@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
+import { safeClick } from '../utils/helper';
 
 const incorrectUserDetail = {
     name: 'No User',
@@ -14,14 +15,14 @@ test.describe('Login User with incorrect email and password', () => {
         })
 
         await test.step(`Click on 'Signup / Login' button & verify 'Login to your account' is visible`, async () => {
-            await homePage.signupOrLogin.click();
+            await safeClick(page, homePage.signupOrLogin);
             await expect(loginPage.loginToAccount).toBeVisible();
         })
 
         await test.step('Enter incorrect email address and password', async () => {
             await loginPage.loginEmail.fill(incorrectUserDetail.email);
             await loginPage.loginPassword.fill(incorrectUserDetail.password);
-            await loginPage.loginButton.click();
+            await safeClick(page, loginPage.loginButton);
         })
 
         await test.step(`Verify error 'Your email or password is incorrect!' is visible`, async () => {

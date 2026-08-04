@@ -1,4 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
+import { safeClick } from '../utils/helper';
 
 test.describe('Verify All Products and product detail page', () => {
     test('Verify All Products and product detail page Flow', async ({ page, homePage, searchProduct }) => {
@@ -8,13 +9,13 @@ test.describe('Verify All Products and product detail page', () => {
         })
 
         await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
-            await homePage.products.click();
+            await safeClick(page, homePage.products);
         })
 
         await test.step(`Enter product name in search input and click search button`, async () => {
             const productName = 'Winter Top';
             await searchProduct.searchProductField.fill(productName);
-            await searchProduct.searchIcon.click();
+            await safeClick(page, searchProduct.searchIcon);
             await expect(searchProduct.searchedProduct(productName)).toBeVisible();
         })
     })

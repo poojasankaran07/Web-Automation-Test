@@ -1,9 +1,14 @@
-import { Page, expect } from '@playwright/test';
+import { Locator, Page } from "@playwright/test";
 
-export async function expectUrl(page: Page, expectedPath: string) {
-    if (page.url().includes('#google_vignette')) {
-        await page.goBack();
+export async function safeClick(page: Page, locator: Locator) {
+    try {
+        await locator.click({ timeout: 30000 });
+    } catch (error) {
+        if (page.url().includes('#google_vignette')) {
+            await page.goBack();
+            await locator.click();
+        } else {
+            throw error;
+        }
     }
-
-    await expect(page).toHaveURL(new RegExp(`${expectedPath}$`));
 }

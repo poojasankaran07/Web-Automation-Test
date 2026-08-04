@@ -33,6 +33,14 @@ class CartPage {
         return this.productRow(productId)
             .locator('.cart_total_price');
     }
+
+    get proceedToCheckout() {
+        return this.page.getByText('Proceed To Checkout');
+    }
+
+    get registerOrLoginLink() {
+        return this.page.getByRole('link', { name: 'Register / Login' });
+    }
 }
 
 export default CartPage;
