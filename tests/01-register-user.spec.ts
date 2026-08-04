@@ -1,7 +1,6 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { expectUrl } from '../utils/helper';
 
-
 const random = Math.floor(Math.random() * 100000);
 
 const user = {

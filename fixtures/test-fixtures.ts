@@ -7,6 +7,8 @@ import TestCasesPage from '../pages/test-cases';
 import ProductsPage from '../pages/product-details';
 import SearchProduct from '../pages/search-product';
 import ContactUsPage from '../pages/contact-us';
+import SubscriptionPage from '../pages/subscription';
+import CartPage from '../pages/cart-page'
 
 type Pages = {
     homePage: HomePage;
@@ -16,6 +18,8 @@ type Pages = {
     productsPage: ProductsPage;
     searchProduct: SearchProduct;
     contactUsPage: ContactUsPage;
+    subscriptionPage: SubscriptionPage;
+    cartPage: CartPage;
 };
 
 export const test = base.extend<Pages>({
@@ -46,7 +50,15 @@ export const test = base.extend<Pages>({
 
     contactUsPage: async ({ page }, use) => {
         await use(new ContactUsPage(page));
-    }
+    },
+
+    subscriptionPage: async ({ page }, use) => {
+        await use(new SubscriptionPage(page));
+    },
+
+    cartPage: async ({ page }, use) => {
+        await use(new CartPage(page));
+    },
 });
 
 export { expect } from '@playwright/test';

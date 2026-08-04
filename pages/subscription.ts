@@ -1,6 +1,6 @@
 import { Page } from '@playwright/test';
 
-class HomePage {
+class SubscriptionPage {
     private page: Page
     constructor(page: Page) {
         this.page = page;
@@ -40,10 +40,22 @@ class HomePage {
         return this.page.getByRole('link', { name: ' Products' });
     }
 
-    get cart() {
-        return this.page.getByRole('link', { name: ' Cart' });
+    get subscriptionText() {
+        return this.page.getByRole('heading', {name: 'Subscription'});
+    }
+
+    get subscriptionEmail() {
+        return this.page.locator('id=susbscribe_email');
+    }
+
+    get subscribeEmailEnterButton() {
+        return this.page.locator('id=subscribe');
+    }
+
+    get successfulSubscribeMessage() {
+        return this.page.locator('id=success-subscribe');
     }
 
 }
 
-export default HomePage;
+export default SubscriptionPage;

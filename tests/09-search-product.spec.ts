@@ -1,8 +1,6 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { expectUrl } from '../utils/helper';
 
-
-
 test.describe('Verify All Products and product detail page', () => {
     test('Verify All Products and product detail page Flow', async ({ page, homePage, searchProduct }) => {
         await test.step('Verify that home page is visible successfully', async () => {

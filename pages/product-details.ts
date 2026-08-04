@@ -10,8 +10,39 @@ class ProductsPage {
         return this.page.locator('.features_items');
     }
 
+    productCard(productId: number) {
+        return this.page.locator(
+            `.product-image-wrapper:has(a[data-product-id="${productId}"])`
+        );
+    }
+
     viewProduct(productId: number) {
-        return this.page.locator(`a[href="/product_details/${productId}"]`);
+        return this.productCard(productId)
+            .locator(`a[href="/product_details/${productId}"]`);
+    }
+
+    addToCart(productId: number) {
+        return this.productCard(productId)
+            .locator('.product-overlay a.add-to-cart');
+    }
+
+    async getProductDetails(productId: number) {
+
+        const product = this.productCard(productId);
+
+        return {
+            id: productId,
+            name: await product.locator('.productinfo p').innerText(),
+            price: await product.locator('.productinfo h2').innerText()
+        };
+    }
+
+    get continueShopping() {
+        return this.page.getByText('Continue Shopping');
+    }
+
+    get viewCart() {
+        return this.page.getByRole('link', { name: 'View Cart' });
     }
 
     get productInformation() {
