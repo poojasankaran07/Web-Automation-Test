@@ -41,6 +41,10 @@ class CartPage {
     get registerOrLoginLink() {
         return this.page.getByRole('link', { name: 'Register / Login' });
     }
+
+    deleteProductButton(productId: number) {
+        return this.page.locator(`[data-product-id="${productId}"]`);
+    }
 }
 
 export default CartPage;

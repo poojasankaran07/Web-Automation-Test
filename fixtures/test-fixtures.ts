@@ -10,6 +10,8 @@ import ContactUsPage from '../pages/contact-us';
 import SubscriptionPage from '../pages/subscription';
 import CartPage from '../pages/cart-page'
 import CheckoutPage from '../pages/checkout-page';
+import CategoryPage from '../pages/category-page';
+import ReviewPage from '../pages/review-page';
 
 type Pages = {
     homePage: HomePage;
@@ -22,6 +24,8 @@ type Pages = {
     subscriptionPage: SubscriptionPage;
     cartPage: CartPage;
     checkoutPage: CheckoutPage;
+    categoryPage: CategoryPage;
+    reviewPage: ReviewPage;
 };
 
 export const test = base.extend<Pages>({
@@ -64,6 +68,14 @@ export const test = base.extend<Pages>({
 
     checkoutPage: async ({ page }, use) => {
         await use(new CheckoutPage(page));
+    },
+
+    categoryPage: async ({ page }, use) => {
+        await use(new CategoryPage(page));
+    },
+
+    reviewPage: async ({ page }, use) => {
+        await use(new ReviewPage(page));
     },
 });
 

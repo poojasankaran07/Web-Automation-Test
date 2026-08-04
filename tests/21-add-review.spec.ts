@@ -2,7 +2,7 @@ import { test, expect } from '../fixtures/test-fixtures';
 import { safeClick } from '../utils/helper';
 
 test.describe('Verify All Products and product detail page', () => {
-    test('Verify All Products and product detail page Flow', async ({ page, homePage, productsPage }) => {
+    test('Verify All Products and product detail page Flow', async ({ page, homePage, productsPage, reviewPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
             await page.goto('https://automationexercise.com/');
             await expect(homePage.automationLogoImage).toBeVisible();
@@ -20,14 +20,19 @@ test.describe('Verify All Products and product detail page', () => {
             await safeClick(page, productsPage.viewProduct(1));
         })
 
-        await test.step(`Verify product name, category, price, availability, condition, brand are visible`, async () => {
-            await expect(productsPage.productInformation).toBeVisible();
-            await expect(productsPage.productName).toBeVisible();
-            await expect(productsPage.category).toBeVisible();
-            await expect(productsPage.price).toBeVisible();
-            await expect(productsPage.availability).toBeVisible();
-            await expect(productsPage.condition).toBeVisible();
-            await expect(productsPage.brand).toBeVisible();
+        await test.step(`Verify 'Write Your Review' is visible`, async () => {
+            await expect(reviewPage.reviewSection).toBeVisible();
+        })
+
+        await test.step(`Enter name, email and review & click 'Submit' button`, async () => {
+            await reviewPage.reviewerName.fill(`Name_${Math.floor(Math.random() * 10000)}`)
+            await reviewPage.reviewerEmail.fill(`email${Math.floor(Math.random() * 10000)}@test.com`)
+            await reviewPage.reviewerText.fill(`Review Text Added - ${Math.floor(Math.random() * 10000)}`)
+            await safeClick(page, reviewPage.reviewSubmitButton);
+        })
+
+        await test.step(`Verify success message is visible`, async () => {
+            await expect(reviewPage.reviewSuccessMessage).toBeVisible();
         })
     })
 })
