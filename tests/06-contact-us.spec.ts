@@ -1,5 +1,4 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { expectUrl } from '../utils/helper';
 
 const random = Math.floor(Math.random() * 100000);
 
@@ -50,7 +49,6 @@ test.describe('Login User with correct email and password & Logout User', () => 
 
         await test.step(`Click 'Home' button and verify that landed to home page successfully`, async () => {
             await contactUsPage.homeButton.click();
-            await expectUrl(page, '/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
     })

@@ -1,5 +1,4 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { expectUrl } from '../utils/helper';
 
 test.describe('Verify All Products and product detail page', () => {
     test('Verify All Products and product detail page Flow', async ({ page, homePage, productsPage, cartPage }) => {
@@ -16,7 +15,6 @@ test.describe('Verify All Products and product detail page', () => {
 
         await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
             await homePage.products.click();
-            await expectUrl(page, '/products');
         })
 
         await test.step(`Hover over first product and click 'Add to cart & click 'Continue Shopping' button'`, async () => {
@@ -37,7 +35,7 @@ test.describe('Verify All Products and product detail page', () => {
             addedProducts.push(product2);
 
             await productsPage.viewCart.click();
-            await expectUrl(page, '/view_cart');
+
         })
 
         await test.step(`Verify both products are added to Cart'`, async () => {

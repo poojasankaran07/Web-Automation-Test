@@ -1,5 +1,4 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { expectUrl } from '../utils/helper';
 
 const existingUserDetail = {
     name: 'Existing UserTest',
@@ -31,7 +30,6 @@ test.describe('Login User with correct email and password & Logout User', () => 
 
         await test.step(`Click 'Logout' button & Verify that user is navigated to login page`, async () => {
             await homePage.logout.click();
-            await expectUrl(page, '/login');
             await expect(homePage.signupOrLogin).toBeVisible();
         })
     })

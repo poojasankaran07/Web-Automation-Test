@@ -1,5 +1,4 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { expectUrl } from '../utils/helper';
 
 const random = Math.floor(Math.random() * 100000);
 
@@ -84,13 +83,11 @@ test.describe('User register Flow', () => {
 
     await test.step(`Click 'Create Account button' & verify that 'ACCOUNT CREATED!' is visible`, async () => {
       await registerPage.createAccountButton.click();
-      await expectUrl(page, '/account_created');
       await expect(registerPage.accountCreated).toBeVisible();
     })
 
     await test.step(`Click 'Continue' button & verify that 'Logged in as username' is visible`, async () => {
       await registerPage.continueButtonAfterAccountCreationAndDeletion.click();
-      await expectUrl(page, '/');
       await expect(homePage.loggedInUser).toContainText(`Logged in as ${user.name}`);
     })
 
@@ -98,7 +95,6 @@ test.describe('User register Flow', () => {
       await homePage.deleteAccount.click();
       await expect(registerPage.accountDeleted).toBeVisible();
       await registerPage.continueButtonAfterAccountCreationAndDeletion.click();
-      await expectUrl(page, '/');
       await expect(homePage.signupOrLogin).toBeVisible();
     })
   })

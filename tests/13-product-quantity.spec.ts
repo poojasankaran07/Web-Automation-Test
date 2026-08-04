@@ -16,18 +16,19 @@ test.describe('Verify All Products and product detail page', () => {
             await expect(productsPage.productsList).toBeVisible();
         })
 
-        await test.step(`Click on 'View Product' of first product & verify user is landed to product detail page`, async () => {
+        await test.step(`Click on 'View Product' of first product & verify product detail is opened`, async () => {
             await productsPage.viewProduct(1).click();
+            await expect(productsPage.productInformation).toBeVisible();
         })
 
-        await test.step(`Verify product name, category, price, availability, condition, brand are visible`, async () => {
-            await expect(productsPage.productInformation).toBeVisible();
-            await expect(productsPage.productName).toBeVisible();
-            await expect(productsPage.category).toBeVisible();
-            await expect(productsPage.price).toBeVisible();
-            await expect(productsPage.availability).toBeVisible();
-            await expect(productsPage.condition).toBeVisible();
-            await expect(productsPage.brand).toBeVisible();
+        await test.step(`Increase quantity to 4`, async () => {
+            await productsPage.quantityInput.fill('4');
+            // await page.waitForTimeout(3000);
+            // await productsPage.quantityInput.press('ArrowUp');
+            // await page.waitForTimeout(3000);
+            // await productsPage.quantityInput.press('ArrowUp');
+            // await page.waitForTimeout(3000);
+            // await productsPage.quantityInput.press('ArrowUp');
         })
     })
 })

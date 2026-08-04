@@ -72,6 +72,10 @@ class ProductsPage {
     get brand() {
         return this.productInformation.locator('p').filter({ hasText: 'Brand:' });
     }
+
+    get quantityInput() {
+        return this.page.locator('#quantity');
+    }
 }
 
 export default ProductsPage;
