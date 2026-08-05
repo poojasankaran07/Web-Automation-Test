@@ -1,5 +1,4 @@
 import { test as base } from '@playwright/test';
-
 import HomePage from '../pages/home-page';
 import LoginPage from '../pages/login-page';
 import RegisterUser from '../pages/register-user';
@@ -12,6 +11,7 @@ import CartPage from '../pages/cart-page'
 import CheckoutPage from '../pages/checkout-page';
 import CategoryPage from '../pages/category-page';
 import ReviewPage from '../pages/review-page';
+import RecommendPage from '../pages/recommend';
 
 type Pages = {
     homePage: HomePage;
@@ -26,6 +26,7 @@ type Pages = {
     checkoutPage: CheckoutPage;
     categoryPage: CategoryPage;
     reviewPage: ReviewPage;
+    recommendPage: RecommendPage;
 };
 
 export const test = base.extend<Pages>({
@@ -76,6 +77,10 @@ export const test = base.extend<Pages>({
 
     reviewPage: async ({ page }, use) => {
         await use(new ReviewPage(page));
+    },
+
+    recommendPage: async ({ page }, use) => {
+        await use(new RecommendPage(page));
     },
 });
 

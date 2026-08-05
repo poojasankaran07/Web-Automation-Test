@@ -1,8 +1,8 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import { safeClick } from '../utils/helper';
 
-test.describe('Verify All Products and product detail page', () => {
-    test('Verify All Products and product detail page Flow', async ({ page, homePage, productsPage, cartPage }) => {
+test.describe('Add Products in Cart', () => {
+    test('Add Products in Cart Flow', async ({ page, homePage, productsPage, cartPage }) => {
         const addedProducts: {
             id: number;
             name: string;

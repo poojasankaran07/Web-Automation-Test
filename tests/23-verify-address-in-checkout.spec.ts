@@ -25,8 +25,8 @@ const cardDetails = {
     expiryYear: '2030'
 }
 
-test.describe('Verify All Products and product detail page', () => {
-    test('Verify All Products and product detail page Flow', async ({ page, homePage, productsPage, cartPage, registerPage, checkoutPage }) => {
+test.describe('Verify address details in checkout page', () => {
+    test('Verify address details in checkout page Flow', async ({ page, homePage, productsPage, cartPage, registerPage, checkoutPage }) => {
         const addedProducts: {
             id: number;
             name: string;
@@ -38,27 +38,8 @@ test.describe('Verify All Products and product detail page', () => {
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 
-        await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
-            await safeClick(page, homePage.products);
-        })
-
-        await test.step(`Add products to cart & go to cart page`, async () => {
-            await productsPage.productCard(1).hover();
-
-            const product1 = await productsPage.getProductDetails(1);
-            await safeClick(page, productsPage.addToCart(1));
-            addedProducts.push(product1);
-
-            await safeClick(page, productsPage.viewCart);
-        })
-
-        await test.step(`Verify that cart page is displayed`, async () => {
-            await expect(cartPage.productRow(1)).toBeVisible();
-        })
-
-        await test.step(`Click Proceed To Checkout & Click 'Register / Login' button`, async () => {
-            await safeClick(page, cartPage.proceedToCheckout);
-            await safeClick(page, cartPage.registerOrLoginLink);
+        await test.step(`Click 'Signup / Login' button`, async () => {
+            await safeClick(page, homePage.signupOrLogin);
         })
 
         await test.step(`Fill all details in Signup and create account`, async () => {
@@ -114,28 +95,68 @@ test.describe('Verify All Products and product detail page', () => {
             await expect(homePage.loggedInUser).toContainText(`Logged in as ${user.name}`);
         })
 
-        await test.step(`Click 'Cart' button & Click 'Proceed To Checkout' button`, async () => {
-            await safeClick(page, homePage.cart);
+        await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
+            await safeClick(page, homePage.products);
+        })
+
+        await test.step(`Add products to cart & go to cart page`, async () => {
+            await productsPage.productCard(1).hover();
+
+            const product1 = await productsPage.getProductDetails(1);
+            await safeClick(page, productsPage.addToCart(1));
+            addedProducts.push(product1);
+
+            await safeClick(page, productsPage.viewCart);
+        })
+
+        await test.step(`Verify that cart page is displayed`, async () => {
+            await expect(cartPage.productRow(1)).toBeVisible();
+        })
+
+        await test.step(`Click Proceed To Checkout`, async () => {
             await safeClick(page, cartPage.proceedToCheckout);
         })
 
-        await test.step(`Enter description in comment text area and click 'Place Order'`, async () => {
-            await checkoutPage.checkoutComment.fill('Random Text Passed');
-            await safeClick(page, checkoutPage.placeorder);
-        })
+        await test.step('Verify delivery address', async () => {
+            await expect(checkoutPage.addressCompany(checkoutPage.deliveryAddress))
+                .toContainText(user.company);
 
-        await test.step(`Enter payment details: Name on Card, Card Number, CVC, Expiration date`, async () => {
-            await checkoutPage.cardName.fill(cardDetails.cardName);
-            await checkoutPage.cardNumber.fill(cardDetails.cardNumber);
-            await checkoutPage.cardCvv.fill(cardDetails.cardCvv);
-            await checkoutPage.cardExpiryMonth.fill(cardDetails.expiryMonth);
-            await checkoutPage.cardExpiryYear.fill(cardDetails.expiryYear);
-        })
+            await expect(checkoutPage.address1(checkoutPage.deliveryAddress))
+                .toContainText(user.address);
 
-        await test.step(`Click 'Pay and Confirm Order' button & verify success message`, async () => {
-            await safeClick(page, checkoutPage.finalPayButton);
-            await expect(checkoutPage.orderConfirmationMessage).toBeVisible();
-        })
+            await expect(checkoutPage.address2(checkoutPage.deliveryAddress))
+                .toContainText(user.address2);
+
+            await expect(checkoutPage.cityStateZip(checkoutPage.deliveryAddress))
+                .toContainText(`${user.city} ${user.state} ${user.zipcode}`);
+
+            await expect(checkoutPage.country(checkoutPage.deliveryAddress))
+                .toContainText(user.country);
+
+            await expect(checkoutPage.phone(checkoutPage.deliveryAddress))
+                .toContainText(user.mobileNumber);
+        });
+
+
+        await test.step('Verify billing address', async () => {
+            await expect(checkoutPage.addressCompany(checkoutPage.deliveryAddress))
+                .toContainText(user.company);
+
+            await expect(checkoutPage.address1(checkoutPage.deliveryAddress))
+                .toContainText(user.address);
+
+            await expect(checkoutPage.address2(checkoutPage.deliveryAddress))
+                .toContainText(user.address2);
+
+            await expect(checkoutPage.cityStateZip(checkoutPage.billingAddress))
+                .toContainText(`${user.city} ${user.state} ${user.zipcode}`);
+
+            await expect(checkoutPage.country(checkoutPage.billingAddress))
+                .toContainText(user.country);
+
+            await expect(checkoutPage.phone(checkoutPage.billingAddress))
+                .toContainText(user.mobileNumber);
+        });
 
         await test.step(`Click 'Delete Account' button`, async () => {
             await safeClick(page, homePage.deleteAccount);

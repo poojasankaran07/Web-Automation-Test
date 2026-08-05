@@ -3,8 +3,8 @@ import { safeClick } from '../utils/helper';
 
 const randomEmail = `email_${Math.floor(Math.random() * 100000)}@test.com`;
 
-test.describe('Verify All Products and product detail page', () => {
-    test('Verify All Products and product detail page Flow', async ({ page, homePage, subscriptionPage }) => {
+test.describe('Verify Subscription in Cart page', () => {
+    test('Verify Subscription in Cart page Flow', async ({ page, homePage, subscriptionPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
             await page.goto('https://automationexercise.com/');
             await expect(homePage.automationLogoImage).toBeVisible();

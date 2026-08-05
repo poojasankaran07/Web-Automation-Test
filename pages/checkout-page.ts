@@ -41,6 +41,38 @@ class CheckoutPage {
     get orderConfirmationMessage() {
         return this.page.getByText('Congratulations! Your order has been confirmed!');
     }
+
+    get deliveryAddress() {
+        return this.page.locator('#address_delivery');
+    }
+
+    get billingAddress() {
+        return this.page.locator('#address_invoice');
+    }
+
+    addressCompany(section: any) {
+        return section.locator('.address_address1.address_address2').nth(0);
+    }
+
+    address1(section: any) {
+        return section.locator('.address_address1.address_address2').nth(1);
+    }
+
+    address2(section: any) {
+        return section.locator('.address_address1.address_address2').nth(2);
+    }
+
+    cityStateZip(addressSection: any) {
+        return addressSection.locator('.address_city.address_state_name.address_postcode');
+    }
+
+    country(addressSection: any) {
+        return addressSection.locator('.address_country_name');
+    }
+
+    phone(addressSection: any) {
+        return addressSection.locator('.address_phone');
+    }
 }
 
 export default CheckoutPage;

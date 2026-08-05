@@ -7,8 +7,8 @@ const existingUserDetail = {
     password: 'Test@123'
 }
 
-test.describe('Login User with correct email and password & Logout User', () => {
-    test('Verify Valid Login Flow & Logout Flow', async ({ page, homePage, loginPage }) => {
+test.describe('Logout User', () => {
+    test('Logout User Flow', async ({ page, homePage, loginPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
             await page.goto('https://automationexercise.com/');
             await expect(homePage.automationLogoImage).toBeVisible();

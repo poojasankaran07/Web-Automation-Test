@@ -44,6 +44,14 @@ class HomePage {
         return this.page.getByRole('link', { name: ' Cart' });
     }
 
+    get scrollUpIcon() {
+        return this.page.locator('id=scrollUp');
+    }
+
+    get sliderCarousel() {
+        return this.page.locator('id=slider-carousel');
+    }
+
 }
 
 export default HomePage;
