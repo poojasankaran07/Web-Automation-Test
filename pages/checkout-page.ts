@@ -73,6 +73,15 @@ class CheckoutPage {
     phone(addressSection: any) {
         return addressSection.locator('.address_phone');
     }
+
+    get downloadInvoiceButton() {
+        return this.page.getByRole('link', { name: 'Download Invoice' });
+    }
+
+    get continueButtonAfterOrderPlaced() {
+        return this.page.getByTestId('continue-button');
+    }
+
 }
 
 export default CheckoutPage;

@@ -1,13 +1,12 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
-
-const random = Math.floor(Math.random() * 100000);
+import common from '../utils/common-functions';
+import dataGenerator from '../utils/data-generator';
 
 const getInTouchText = {
-    name: `TestName_${random}`,
-    email: `testemail${random}@yopmail.com`,
-    subject: `Adding Subject - ${random}`,
-    message: `Adding a message to get in touch with the team - ${random}`
+    name: dataGenerator.generateName(),
+    email: dataGenerator.generateEmail(),
+    subject: dataGenerator.generateSubject(),
+    message: dataGenerator.generateMessage()
 };
 
 test.describe('Contact Us Form', () => {
@@ -18,15 +17,15 @@ test.describe('Contact Us Form', () => {
         })
 
         await test.step(`Click on 'Contact Us' button & verify 'GET IN TOUCH' is visible`, async () => {
-            await safeClick(page, homePage.contactUs);
+            await common.safeClick(page, homePage.contactUs);
             await expect(contactUsPage.getInTouch).toBeVisible();
         })
 
         await test.step(`Enter name, email, subject and message`, async () => {
-            await contactUsPage.name.fill(getInTouchText.name);
-            await contactUsPage.email.fill(getInTouchText.email);
-            await contactUsPage.subject.fill(getInTouchText.subject);
-            await contactUsPage.message.fill(getInTouchText.message);
+            await common.fillValue(contactUsPage.name, getInTouchText.name);
+            await common.fillValue(contactUsPage.email, getInTouchText.email);
+            await common.fillValue(contactUsPage.subject, getInTouchText.subject);
+            await common.fillValue(contactUsPage.message, getInTouchText.message);
         })
 
         await test.step(`Upload file`, async () => {
@@ -44,12 +43,12 @@ test.describe('Contact Us Form', () => {
                 dialog.accept();
             });
 
-            await safeClick(page, contactUsPage.submitButton);
+            await common.safeClick(page, contactUsPage.submitButton);
             await expect(contactUsPage.submittedSuccessMessage).toBeVisible();
         })
 
         await test.step(`Click 'Home' button and verify that landed to home page successfully`, async () => {
-            await safeClick(page, contactUsPage.homeButton);
+            await common.safeClick(page, contactUsPage.homeButton);
             await expect(homePage.automationLogoImage).toBeVisible();
         })
     })

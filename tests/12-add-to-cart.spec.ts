@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
+import common from '../utils/common-functions';
 
 test.describe('Add Products in Cart', () => {
     test('Add Products in Cart Flow', async ({ page, homePage, productsPage, cartPage }) => {
@@ -15,27 +15,27 @@ test.describe('Add Products in Cart', () => {
         })
 
         await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
-            await safeClick(page, homePage.products);
+            await common.safeClick(page, homePage.products);
         })
 
         await test.step(`Hover over first product and click 'Add to cart & click 'Continue Shopping' button'`, async () => {
             await productsPage.productCard(1).hover();
 
             const product1 = await productsPage.getProductDetails(1);
-            await safeClick(page, productsPage.addToCart(1));
+            await common.safeClick(page, productsPage.addToCart(1));
             addedProducts.push(product1);
 
-            await safeClick(page, productsPage.continueShopping);
+            await common.safeClick(page, productsPage.continueShopping);
         })
 
         await test.step(`Hover over second product and click 'Add to cart & click 'View Cart' button'`, async () => {
             await productsPage.productCard(2).hover();
 
             const product2 = await productsPage.getProductDetails(2);
-            await safeClick(page, productsPage.addToCart(2));
+            await common.safeClick(page, productsPage.addToCart(2));
             addedProducts.push(product2);
 
-            await safeClick(page, productsPage.viewCart);
+            await common.safeClick(page, productsPage.viewCart);
 
         })
 

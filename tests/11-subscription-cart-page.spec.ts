@@ -1,7 +1,8 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
+import common from '../utils/common-functions';
+import dataGenerator from '../utils/data-generator';
 
-const randomEmail = `email_${Math.floor(Math.random() * 100000)}@test.com`;
+const randomEmail = dataGenerator.generateEmail('email', 'test.com');
 
 test.describe('Verify Subscription in Cart page', () => {
     test('Verify Subscription in Cart page Flow', async ({ page, homePage, subscriptionPage }) => {
@@ -11,14 +12,14 @@ test.describe('Verify Subscription in Cart page', () => {
         })
 
         await test.step(`Click 'Cart' button & Scroll down to footer & verify text 'SUBSCRIPTION'`, async () => {
-            await safeClick(page, homePage.cart);
+            await common.safeClick(page, homePage.cart);
             await expect(subscriptionPage.subscriptionText).toBeVisible();
             await expect(subscriptionPage.subscriptionText).toHaveText('Subscription');
         })
 
         await test.step(`Enter email address in input and click arrow button`, async () => {
-            await subscriptionPage.subscriptionEmail.fill(randomEmail);
-            await safeClick(page, subscriptionPage.subscribeEmailEnterButton);
+            await common.fillValue(subscriptionPage.subscriptionEmail, randomEmail);
+            await common.safeClick(page, subscriptionPage.subscribeEmailEnterButton);
         })
 
         await test.step(`Verify success message 'You have been successfully subscribed!' is visible`, async () => {

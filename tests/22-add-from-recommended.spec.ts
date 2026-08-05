@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
+import common from '../utils/common-functions';
 
 test.describe('Add to cart from Recommended items', () => {
     test('Add to cart from Recommended items Flow', async ({ page, homePage, productsPage, cartPage, recommendPage }) => {
@@ -11,8 +11,8 @@ test.describe('Add to cart from Recommended items', () => {
 
         await test.step(`Verify 'RECOMMENDED ITEMS' are visible`, async () => {
             await expect(recommendPage.recommendedSection).toBeVisible();
-            await safeClick(page, recommendPage.addToCart('Stylish Dress'));
-            await safeClick(page, productsPage.viewCart);
+            await common.safeClick(page, recommendPage.addToCart('Stylish Dress'));
+            await common.safeClick(page, productsPage.viewCart);
             await expect(cartPage.productName(4)).toHaveText('Stylish Dress');
         })
     })

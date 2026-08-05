@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
+import common from '../utils/common-functions';
 
 test.describe('Verify Subscription in home page', () => {
     test('Verify Subscription in home page Flow', async ({ page, homePage, subscriptionPage }) => {
@@ -15,7 +15,7 @@ test.describe('Verify Subscription in home page', () => {
         })
 
         await test.step(`Click on arrow at bottom right side to move upward & verify the slider carousel`, async () => {
-            await safeClick(page, homePage.scrollUpIcon);
+            await common.safeClick(page, homePage.scrollUpIcon);
             await expect(homePage.sliderCarousel).toBeVisible();
         })
     })

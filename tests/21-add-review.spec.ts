@@ -1,5 +1,6 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
+import common from '../utils/common-functions';
+import dataGenerator from '../utils/data-generator';
 
 test.describe('Add review on product', () => {
     test('Add review on product Flow', async ({ page, homePage, productsPage, reviewPage }) => {
@@ -9,7 +10,7 @@ test.describe('Add review on product', () => {
         })
 
         await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
-            await safeClick(page, homePage.products);
+            await common.safeClick(page, homePage.products);
         })
 
         await test.step(`Verify the products list is visible`, async () => {
@@ -17,7 +18,7 @@ test.describe('Add review on product', () => {
         })
 
         await test.step(`Click on 'View Product' of first product & verify user is landed to product detail page`, async () => {
-            await safeClick(page, productsPage.viewProduct(1));
+            await common.safeClick(page, productsPage.viewProduct(1));
         })
 
         await test.step(`Verify 'Write Your Review' is visible`, async () => {
@@ -25,10 +26,10 @@ test.describe('Add review on product', () => {
         })
 
         await test.step(`Enter name, email and review & click 'Submit' button`, async () => {
-            await reviewPage.reviewerName.fill(`Name_${Math.floor(Math.random() * 10000)}`)
-            await reviewPage.reviewerEmail.fill(`email${Math.floor(Math.random() * 10000)}@test.com`)
-            await reviewPage.reviewerText.fill(`Review Text Added - ${Math.floor(Math.random() * 10000)}`)
-            await safeClick(page, reviewPage.reviewSubmitButton);
+            await common.fillValue(reviewPage.reviewerName, dataGenerator.generateName('Name'))
+            await common.fillValue(reviewPage.reviewerEmail, dataGenerator.generateEmail('email', 'test.com'))
+            await common.fillValue(reviewPage.reviewerText, dataGenerator.generateReviewText())
+            await common.safeClick(page, reviewPage.reviewSubmitButton);
         })
 
         await test.step(`Verify success message is visible`, async () => {

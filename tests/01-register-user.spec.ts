@@ -1,15 +1,14 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
-
-const random = Math.floor(Math.random() * 100000);
+import common from '../utils/common-functions';
+import dataGenerator from '../utils/data-generator';
 
 const user = {
-  name: `TestName_${random}`,
-  lastName: `TestLastName_${random}`,
-  email: `testemail${random}@yopmail.com`,
-  company: `Company_${random}`,
-  address: `123 Main Street ${random}`,
-  address2: `Near_${random}`,
+  name: dataGenerator.generateName(),
+  lastName: dataGenerator.generateLastName(),
+  email: dataGenerator.generateEmail(),
+  company: dataGenerator.generateCompany(),
+  address: dataGenerator.generateAddress(),
+  address2: dataGenerator.generateAddress2(),
   country: 'India',
   state: 'Karnataka',
   city: 'Bangalore',
@@ -25,14 +24,14 @@ test.describe('User register Flow', () => {
     })
 
     await test.step(`Click on 'Signup / Login' button & verify 'New User Signup!' is visible`, async () => {
-      await safeClick(page, homePage.signupOrLogin);
+      await common.safeClick(page, homePage.signupOrLogin);
       await expect(registerPage.newUserSignup).toBeVisible();
     })
 
     await test.step(`Enter name and email address & click 'Signup' button to verify that 'ENTER ACCOUNT INFORMATION' is visible`, async () => {
-      await registerPage.signupName.fill(user.name);
-      await registerPage.signupEmail.fill(user.email);
-      await safeClick(page, registerPage.signupButton);
+      await common.fillValue(registerPage.signupName, user.name);
+      await common.fillValue(registerPage.signupEmail, user.email);
+      await common.safeClick(page, registerPage.signupButton);
       await expect(registerPage.enterAccountInformation).toBeVisible();
     })
 
@@ -52,7 +51,7 @@ test.describe('User register Flow', () => {
       await expect(registerPage.accountInfoEmail).toHaveValue(user.email);
       await expect(registerPage.accountInfoEmail).not.toBeEditable();
 
-      await registerPage.accountInfoPassword.fill('Test@123');
+      await common.fillValue(registerPage.accountInfoPassword, 'Test@123');
 
       await registerPage.dobDay.selectOption('10');
       await registerPage.dobMonth.selectOption('January');
@@ -70,32 +69,32 @@ test.describe('User register Flow', () => {
     })
 
     await test.step(`Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number`, async () => {
-      await registerPage.addressInfoFirstName.fill(user.name);
-      await registerPage.addressInfoLastName.fill(user.lastName);
-      await registerPage.addressInfoCompany.fill(user.company);
-      await registerPage.addressInfoAddress.fill(user.address);
-      await registerPage.addressInfoAddress2.fill(user.address2);
+      await common.fillValue(registerPage.addressInfoFirstName, user.name);
+      await common.fillValue(registerPage.addressInfoLastName, user.lastName);
+      await common.fillValue(registerPage.addressInfoCompany, user.company);
+      await common.fillValue(registerPage.addressInfoAddress, user.address);
+      await common.fillValue(registerPage.addressInfoAddress2, user.address2);
       await registerPage.addressInfoCountry.selectOption(user.country);
-      await registerPage.addressInfoState.fill(user.state);
-      await registerPage.addressInfoCity.fill(user.city);
-      await registerPage.addressInfoZipcode.fill(user.zipcode);
-      await registerPage.addressInfoMobileNumber.fill(user.mobileNumber);
+      await common.fillValue(registerPage.addressInfoState, user.state);
+      await common.fillValue(registerPage.addressInfoCity, user.city);
+      await common.fillValue(registerPage.addressInfoZipcode, user.zipcode);
+      await common.fillValue(registerPage.addressInfoMobileNumber, user.mobileNumber);
     })
 
     await test.step(`Click 'Create Account button' & verify that 'ACCOUNT CREATED!' is visible`, async () => {
-      await safeClick(page, registerPage.createAccountButton);
+      await common.safeClick(page, registerPage.createAccountButton);
       await expect(registerPage.accountCreated).toBeVisible();
     })
 
     await test.step(`Click 'Continue' button & verify that 'Logged in as username' is visible`, async () => {
-      await safeClick(page, registerPage.continueButtonAfterAccountCreationAndDeletion);
+      await common.safeClick(page, registerPage.continueButtonAfterAccountCreationAndDeletion);
       await expect(homePage.loggedInUser).toContainText(`Logged in as ${user.name}`);
     })
 
     await test.step(`Click 'Delete Account' button`, async () => {
-      await safeClick(page, homePage.deleteAccount);
+      await common.safeClick(page, homePage.deleteAccount);
       await expect(registerPage.accountDeleted).toBeVisible();
-      await safeClick(page, registerPage.continueButtonAfterAccountCreationAndDeletion);
+      await common.safeClick(page, registerPage.continueButtonAfterAccountCreationAndDeletion);
       await expect(homePage.signupOrLogin).toBeVisible();
     })
   })

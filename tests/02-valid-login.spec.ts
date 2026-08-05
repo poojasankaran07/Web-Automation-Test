@@ -1,5 +1,5 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import { safeClick } from '../utils/helper';
+import common from '../utils/common-functions';
 
 const existingUserDetail = {
     name: 'Existing UserTest',
@@ -15,14 +15,14 @@ test.describe('Login User with correct email and password', () => {
         })
 
         await test.step(`Click on 'Signup / Login' button & verify 'Login to your account' is visible`, async () => {
-            await safeClick(page, homePage.signupOrLogin);
+            await common.safeClick(page, homePage.signupOrLogin);
             await expect(loginPage.loginToAccount).toBeVisible();
         })
 
         await test.step('Enter correct email address and password', async () => {
-            await loginPage.loginEmail.fill(existingUserDetail.email);
-            await loginPage.loginPassword.fill(existingUserDetail.password);
-            await safeClick(page, loginPage.loginButton);
+            await common.fillValue(loginPage.loginEmail, existingUserDetail.email);
+            await common.fillValue(loginPage.loginPassword, existingUserDetail.password);
+            await common.safeClick(page, loginPage.loginButton);
         })
 
         await test.step(`Verify that 'Logged in as username' is visible`, async () => {
