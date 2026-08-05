@@ -3,7 +3,7 @@ import { test, expect } from '../fixtures/test-fixtures';
 test.describe('Verify Subscription in home page', () => {
     test('Verify Subscription in home page Flow', async ({ page, homePage, subscriptionPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

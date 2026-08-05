@@ -12,7 +12,7 @@ const getInTouchText = {
 test.describe('Contact Us Form', () => {
     test('Contact Us Form Flow', async ({ page, homePage, contactUsPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

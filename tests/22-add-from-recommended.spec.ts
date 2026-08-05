@@ -5,7 +5,7 @@ test.describe('Add to cart from Recommended items', () => {
     test('Add to cart from Recommended items Flow', async ({ page, homePage, productsPage, cartPage, recommendPage }) => {
 
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

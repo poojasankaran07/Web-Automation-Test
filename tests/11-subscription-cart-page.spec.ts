@@ -7,7 +7,7 @@ const randomEmail = dataGenerator.generateEmail('email', 'test.com');
 test.describe('Verify Subscription in Cart page', () => {
     test('Verify Subscription in Cart page Flow', async ({ page, homePage, subscriptionPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

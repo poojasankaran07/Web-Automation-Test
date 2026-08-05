@@ -33,7 +33,7 @@ test.describe('Place Order: Register while Checkout', () => {
         }[] = [];
 
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

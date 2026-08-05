@@ -9,6 +9,7 @@ export default defineConfig({
   reporter: [['html'], ['allure-playwright']],
   
   use: {
+    baseURL: 'https://automationexercise.com',
     trace: 'on-first-retry',
     headless: process.env.CI ? true: false,
     testIdAttribute: 'data-qa',

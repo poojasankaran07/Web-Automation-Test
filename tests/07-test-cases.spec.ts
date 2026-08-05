@@ -4,7 +4,7 @@ import common from '../utils/common-functions';
 test.describe('Verify Test Cases Page', () => {
     test('Verify Test Cases Page Flow', async ({ page, homePage, testCasesPage}) => {
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

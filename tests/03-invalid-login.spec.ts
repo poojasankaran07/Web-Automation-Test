@@ -10,7 +10,7 @@ const incorrectUserDetail = {
 test.describe('Login User with incorrect email and password', () => {
     test('Verify Invalid Login Flow', async ({ page, homePage, loginPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 

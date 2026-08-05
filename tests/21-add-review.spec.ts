@@ -5,7 +5,7 @@ import dataGenerator from '../utils/data-generator';
 test.describe('Add review on product', () => {
     test('Add review on product Flow', async ({ page, homePage, productsPage, reviewPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('https://automationexercise.com/');
+            await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 
