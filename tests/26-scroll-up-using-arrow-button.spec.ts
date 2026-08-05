@@ -1,8 +1,8 @@
 import { test, expect } from '../fixtures/test-fixtures';
 import common from '../utils/common-functions';
 
-test.describe('Verify Subscription in home page', () => {
-    test('Verify Subscription in home page Flow', async ({ page, homePage, subscriptionPage }) => {
+test.describe(`Verify Scroll Up without 'Arrow' button and Scroll Down functionality`, () => {
+    test(`Verify Scroll Up without 'Arrow' button and Scroll Down functionality Flow`, async ({ page, homePage, subscriptionPage }) => {
         await test.step('Verify that home page is visible successfully', async () => {
             await page.goto('/');
             await expect(homePage.automationLogoImage).toBeVisible();
