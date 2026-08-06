@@ -1,4 +1,5 @@
 import { Locator, Page } from "@playwright/test";
+import common from "../utils/common-functions";
 
 type CardDetails = {
   name: string;
@@ -117,11 +118,11 @@ class CheckoutPage {
     }
 
     await this.fillPaymentDetails(cardDetails);
-    await this.finalPayButton.click();
+    await common.safeClick(this.page, this.finalPayButton);
   }
 
   async downloadInvoice() {
-    await this.downloadInvoiceButton.click();
+    await common.safeClick(this.page, this.downloadInvoiceButton);
   }
 
   private async getAddressSectionDetails(section: Locator) {

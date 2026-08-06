@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import common from "../utils/common-functions";
 
 class LoginPage {
   private page: Page;
@@ -29,7 +30,7 @@ class LoginPage {
   async login(email: string, password: string) {
     await this.loginEmail.fill(email);
     await this.loginPassword.fill(password);
-    await this.loginButton.click();
+    await common.safeClick(this.page, this.loginButton);
   }
 }
 

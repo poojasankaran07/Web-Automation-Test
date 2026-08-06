@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import common from "../utils/common-functions";
 
 class CategoryPage {
   private page: Page;
@@ -15,7 +16,7 @@ class CategoryPage {
   }
 
   async selectCategory(categoryName: string) {
-    await this.category(categoryName).click();
+    await common.safeClick(this.page, this.category(categoryName));
   }
 
   womenSubCategory(name: string) {
@@ -29,12 +30,18 @@ class CategoryPage {
   async selectSubcategory(categoryName: string, subcategoryName: string) {
     await this.selectCategory(categoryName);
     if (categoryName.toLowerCase() === "women") {
-      await this.womenSubCategory(subcategoryName).click();
+      await common.safeClick(this.page, this.womenSubCategory(subcategoryName));
     } else if (categoryName.toLowerCase() === "men") {
-      await this.menSubCategory(subcategoryName).click();
+      await common.safeClick(this.page, this.menSubCategory(subcategoryName));
     } else {
-      await this.page.locator(`a[href="#${categoryName}"]`).click();
-      await this.page.locator(`a`, { hasText: subcategoryName }).click();
+      await common.safeClick(
+        this.page,
+        this.page.locator(`a[href="#${categoryName}"]`),
+      );
+      await common.safeClick(
+        this.page,
+        this.page.locator(`a`, { hasText: subcategoryName }),
+      );
     }
   }
 

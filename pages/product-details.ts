@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import common from "../utils/common-functions";
 
 class ProductsPage {
   private page: Page;
@@ -23,7 +24,7 @@ class ProductsPage {
   }
 
   async viewProduct(productId: number) {
-    await this.viewProductLink(productId).click();
+    await common.safeClick(this.page, this.viewProductLink(productId));
   }
 
   async openProductDetails(productId: number) {
@@ -43,7 +44,7 @@ class ProductsPage {
   async addToCart(productId: number) {
     const button = this.addToCartButton(productId);
     await button.waitFor({ state: "visible", timeout: 10000 });
-    await button.click({ force: true });
+    await common.safeClick(this.page, button, { force: true });
     await this.page.waitForSelector("#cartModal", {
       state: "visible",
       timeout: 10000,
@@ -68,7 +69,7 @@ class ProductsPage {
       state: "visible",
       timeout: 10000,
     });
-    await this.continueShoppingButton.click({ force: true });
+    await common.safeClick(this.page, this.continueShoppingButton, { force: true });
     await this.page.waitForSelector("#cartModal", {
       state: "hidden",
       timeout: 10000,

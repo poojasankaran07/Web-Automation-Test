@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import common from "../utils/common-functions";
 
 type ContactFormData = {
   name: string;
@@ -61,11 +62,11 @@ class ContactUsPage {
       await this.fileUpload.setInputFiles(file);
     }
 
-    await this.submitButton.click();
+    await common.safeClick(this.page, this.submitButton);
   }
 
   async returnHome() {
-    await this.homeButton.click();
+    await common.safeClick(this.page, this.homeButton);
   }
 }
 

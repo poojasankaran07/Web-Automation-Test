@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import common from "../utils/common-functions";
 
 class HomePage {
   private page: Page;
@@ -37,31 +38,31 @@ class HomePage {
   }
 
   async goToSignupOrLogin() {
-    await this.signupOrLogin.click();
+    await common.safeClick(this.page, this.signupOrLogin);
   }
 
   async goToProducts() {
-    await this.products.click();
+    await common.safeClick(this.page, this.products);
   }
 
   async goToCart() {
-    await this.cart.click();
+    await common.safeClick(this.page, this.cart);
   }
 
   async goToContactUs() {
-    await this.contactUs.click();
+    await common.safeClick(this.page, this.contactUs);
   }
 
   async goToTestCases() {
-    await this.testCases.click();
+    await common.safeClick(this.page, this.testCases);
   }
 
   async logout() {
-    await this.logoutLink.click();
+    await common.safeClick(this.page, this.logoutLink);
   }
 
   async deleteAccount() {
-    await this.deleteAccountLink.click();
+    await common.safeClick(this.page, this.deleteAccountLink);
   }
 
   async scrollUp() {

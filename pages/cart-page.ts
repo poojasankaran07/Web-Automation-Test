@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import common from "../utils/common-functions";
 
 class CartPage {
   private page: Page;
@@ -31,7 +32,7 @@ class CartPage {
   }
 
   async proceedToCheckout() {
-    await this.proceedToCheckoutButton.click();
+    await common.safeClick(this.page, this.proceedToCheckoutButton);
   }
 
   get registerOrLoginButton() {
@@ -39,7 +40,7 @@ class CartPage {
   }
 
   async registerOrLogin() {
-    await this.registerOrLoginButton.click();
+    await common.safeClick(this.page, this.registerOrLoginButton);
   }
 
   deleteProductButton(productId: number) {
@@ -47,7 +48,7 @@ class CartPage {
   }
 
   async removeProduct(productId: number) {
-    await this.deleteProductButton(productId).click();
+    await common.safeClick(this.page, this.deleteProductButton(productId));
   }
 }
 
