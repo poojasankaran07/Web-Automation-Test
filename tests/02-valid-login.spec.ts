@@ -1,5 +1,4 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import common from '../utils/common-functions';
 
 const existingUserDetail = {
     name: 'Existing UserTest',
@@ -8,21 +7,19 @@ const existingUserDetail = {
 }
 
 test.describe('Login User with correct email and password', () => {
-    test('Login User with correct email and password Flow', async ({ page, homePage, loginPage }) => {
-        await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('/');
+    test('Login User with correct email and password Flow', async ({ homePage, loginPage }) => {
+        await test.step('Open home page and verify it is visible', async () => {
+            await homePage.open();
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 
-        await test.step(`Click on 'Signup / Login' button & verify 'Login to your account' is visible`, async () => {
-            await common.safeClick(page, homePage.signupOrLogin);
+        await test.step(`Navigate to login page and verify login form is visible`, async () => {
+            await homePage.goToSignupOrLogin();
             await expect(loginPage.loginToAccount).toBeVisible();
         })
 
-        await test.step('Enter correct email address and password', async () => {
-            await common.fillValue(loginPage.loginEmail, existingUserDetail.email);
-            await common.fillValue(loginPage.loginPassword, existingUserDetail.password);
-            await common.safeClick(page, loginPage.loginButton);
+        await test.step('Login with correct email and password', async () => {
+            await loginPage.login(existingUserDetail.email, existingUserDetail.password);
         })
 
         await test.step(`Verify that 'Logged in as username' is visible`, async () => {

@@ -1,5 +1,12 @@
 import { Page } from '@playwright/test';
 
+type ContactFormData = {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+};
+
 class ContactUsPage {
     private page: Page
     constructor(page: Page) {
@@ -40,6 +47,23 @@ class ContactUsPage {
 
     get homeButton() {
         return this.page.locator('#contact-page a.btn-success');
+    }
+
+    async submitContactForm(data: ContactFormData, file?: string) {
+        await this.name.fill(data.name);
+        await this.email.fill(data.email);
+        await this.subject.fill(data.subject);
+        await this.message.fill(data.message);
+
+        if (file) {
+            await this.fileUpload.setInputFiles(file);
+        }
+
+        await this.submitButton.click();
+    }
+
+    async returnHome() {
+        await this.homeButton.click();
     }
 }
 

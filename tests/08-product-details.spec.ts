@@ -17,7 +17,7 @@ test.describe('Verify All Products and product detail page', () => {
         })
 
         await test.step(`Click on 'View Product' of first product & verify user is landed to product detail page`, async () => {
-            await common.safeClick(page, productsPage.viewProduct(1));
+            await productsPage.viewProduct(1);
         })
 
         await test.step(`Verify product name, category, price, availability, condition, brand are visible`, async () => {

@@ -56,6 +56,10 @@ class SubscriptionPage {
         return this.page.locator('id=success-subscribe');
     }
 
+    async subscribe(email: string) {
+        await this.subscriptionEmail.fill(email);
+        await this.subscribeEmailEnterButton.click();
+    }
 }
 
 export default SubscriptionPage;

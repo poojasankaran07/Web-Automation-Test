@@ -17,6 +17,11 @@ class SearchProduct {
     searchedProduct(productName: string) {
         return this.page.getByText(productName, { exact: true }).first();
     }
+
+    async searchFor(productName: string) {
+        await this.searchProductField.fill(productName);
+        await this.searchIcon.click();
+    }
 }
 
 export default SearchProduct;

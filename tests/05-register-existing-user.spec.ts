@@ -1,5 +1,4 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import common from '../utils/common-functions';
 
 const existingUserDetail = {
     name: 'Existing UserTest',
@@ -8,21 +7,19 @@ const existingUserDetail = {
 }
 
 test.describe('Register User with existing email', () => {
-    test('Register User with existing email Flow', async ({ page, homePage, registerPage}) => {
-        await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('/');
+    test('Register User with existing email Flow', async ({ homePage, registerPage}) => {
+        await test.step('Open home page and verify it is visible', async () => {
+            await homePage.open();
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 
-        await test.step(`Click on 'Signup / Login' button & verify 'New User Signup!' is visible`, async () => {
-            await common.safeClick(page, homePage.signupOrLogin);
+        await test.step(`Navigate to signup page and verify 'New User Signup!' is visible`, async () => {
+            await homePage.goToSignupOrLogin();
             await expect(registerPage.newUserSignup).toBeVisible();
         })
 
         await test.step(`Enter name and already registered email address`, async () => {
-            await common.fillValue(registerPage.signupName, existingUserDetail.name);
-            await common.fillValue(registerPage.signupEmail, existingUserDetail.email);
-            await common.safeClick(page, registerPage.signupButton);
+            await registerPage.startSignup(existingUserDetail.name, existingUserDetail.email);
             await expect(registerPage.emailExistError).toBeVisible();
         })
     })

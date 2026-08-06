@@ -20,16 +20,52 @@ class HomePage {
         });
     }
 
-    get deleteAccount() {
+    get deleteAccountLink() {
         return this.page.getByRole('link', { name: ' Delete Account' });
     }
 
-    get logout() {
+    get logoutLink() {
         return this.page.getByRole('link', { name: ' Logout' });
     }
 
     get contactUs() {
         return this.page.getByRole('link', { name: ' Contact us' });
+    }
+
+    async open() {
+        await this.page.goto('/');
+    }
+
+    async goToSignupOrLogin() {
+        await this.signupOrLogin.click();
+    }
+
+    async goToProducts() {
+        await this.products.click();
+    }
+
+    async goToCart() {
+        await this.cart.click();
+    }
+
+    async goToContactUs() {
+        await this.contactUs.click();
+    }
+
+    async goToTestCases() {
+        await this.testCases.click();
+    }
+
+    async logout() {
+        await this.logoutLink.click();
+    }
+
+    async deleteAccount() {
+        await this.deleteAccountLink.click();
+    }
+
+    async scrollUp() {
+        await this.scrollUpIcon.click();
     }
 
     get testCases() {

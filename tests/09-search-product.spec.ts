@@ -14,8 +14,7 @@ test.describe('Search Product', () => {
 
         await test.step(`Enter product name in search input and click search button`, async () => {
             const productName = 'Winter Top';
-            await common.fillValue(searchProduct.searchProductField, productName);
-            await common.safeClick(page, searchProduct.searchIcon);
+            await searchProduct.searchFor(productName);
             await expect(searchProduct.searchedProduct(productName)).toBeVisible();
         })
     })

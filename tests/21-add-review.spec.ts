@@ -18,7 +18,7 @@ test.describe('Add review on product', () => {
         })
 
         await test.step(`Click on 'View Product' of first product & verify user is landed to product detail page`, async () => {
-            await common.safeClick(page, productsPage.viewProduct(1));
+            await productsPage.viewProduct(1);
         })
 
         await test.step(`Verify 'Write Your Review' is visible`, async () => {
@@ -26,10 +26,11 @@ test.describe('Add review on product', () => {
         })
 
         await test.step(`Enter name, email and review & click 'Submit' button`, async () => {
-            await common.fillValue(reviewPage.reviewerName, dataGenerator.generateName('Name'))
-            await common.fillValue(reviewPage.reviewerEmail, dataGenerator.generateEmail('email', 'test.com'))
-            await common.fillValue(reviewPage.reviewerText, dataGenerator.generateReviewText())
-            await common.safeClick(page, reviewPage.reviewSubmitButton);
+            await reviewPage.submitReview({
+                name: dataGenerator.generateName('Name'),
+                email: dataGenerator.generateEmail('email', 'test.com'),
+                review: dataGenerator.generateReviewText(),
+            });
         })
 
         await test.step(`Verify success message is visible`, async () => {

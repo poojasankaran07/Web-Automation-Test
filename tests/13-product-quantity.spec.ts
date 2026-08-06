@@ -18,7 +18,7 @@ test.describe('Verify Product quantity in Cart', () => {
         })
 
         await test.step(`Click on 'View Product' of first product & verify product detail is opened`, async () => {
-            await common.safeClick(page, productsPage.viewProduct(1));
+            await productsPage.viewProduct(1);
             await expect(productsPage.productInformation).toBeVisible();
         })
 

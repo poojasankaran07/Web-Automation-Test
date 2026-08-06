@@ -18,8 +18,7 @@ test.describe('Verify Subscription in Cart page', () => {
         })
 
         await test.step(`Enter email address in input and click arrow button`, async () => {
-            await common.fillValue(subscriptionPage.subscriptionEmail, randomEmail);
-            await common.safeClick(page, subscriptionPage.subscribeEmailEnterButton);
+            await subscriptionPage.subscribe(randomEmail);
         })
 
         await test.step(`Verify success message 'You have been successfully subscribed!' is visible`, async () => {

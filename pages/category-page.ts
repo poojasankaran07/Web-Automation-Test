@@ -14,12 +14,28 @@ class CategoryPage {
         return this.page.locator(`a[href="#${name}"]`);
     }
 
+    async selectCategory(categoryName: string) {
+        await this.category(categoryName).click();
+    }
+
     womenSubCategory(name: string) {
         return this.page.locator(`#Women .panel-body a`, { hasText: name });
     }
 
     menSubCategory(name: string) {
         return this.page.locator(`#Men .panel-body a`, { hasText: name });
+    }
+
+    async selectSubcategory(categoryName: string, subcategoryName: string) {
+        await this.selectCategory(categoryName);
+        if (categoryName.toLowerCase() === 'women') {
+            await this.womenSubCategory(subcategoryName).click();
+        } else if (categoryName.toLowerCase() === 'men') {
+            await this.menSubCategory(subcategoryName).click();
+        } else {
+            await this.page.locator(`a[href="#${categoryName}"]`).click();
+            await this.page.locator(`a`, { hasText: subcategoryName }).click();
+        }
     }
 
     categoryPageTitle(category: string, subCategory: string) {

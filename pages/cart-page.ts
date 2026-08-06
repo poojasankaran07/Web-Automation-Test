@@ -30,16 +30,28 @@ class CartPage {
             .locator('.cart_total_price');
     }
 
-    get proceedToCheckout() {
+    get proceedToCheckoutButton() {
         return this.page.getByText('Proceed To Checkout');
     }
 
-    get registerOrLoginLink() {
+    async proceedToCheckout() {
+        await this.proceedToCheckoutButton.click();
+    }
+
+    get registerOrLoginButton() {
         return this.page.getByRole('link', { name: 'Register / Login' });
+    }
+
+    async registerOrLogin() {
+        await this.registerOrLoginButton.click();
     }
 
     deleteProductButton(productId: number) {
         return this.page.locator(`[data-product-id="${productId}"]`);
+    }
+
+    async removeProduct(productId: number) {
+        await this.deleteProductButton(productId).click();
     }
 }
 

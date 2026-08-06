@@ -22,6 +22,10 @@ class RecommendPage {
         return this.productCard(productName)
             .locator('.add-to-cart');
     }
+
+    async addRecommendedItemToCart(itemName: string) {
+        await this.addToCart(itemName).click();
+    }
 }
 
 export default RecommendPage;

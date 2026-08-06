@@ -16,20 +16,38 @@ class ProductsPage {
         );
     }
 
-    viewProduct(productId: number) {
+    viewProductLink(productId: number) {
         return this.productCard(productId)
             .locator(`a[href="/product_details/${productId}"]`);
     }
 
-    addToCart(productId: number) {
+    async viewProduct(productId: number) {
+        await this.viewProductLink(productId).click();
+    }
+
+    async openProductDetails(productId: number) {
+        await this.viewProduct(productId);
+    }
+
+    async verifyProductDetailPage(productId: number) {
+        return this.page.url().includes(`/product_details/${productId}`);
+    }
+
+    addToCartButton(productId: number) {
         return this.productCard(productId)
-            .locator('.product-overlay a.add-to-cart');
+            .locator('.productinfo a.add-to-cart, .product-overlay a.add-to-cart')
+            .first();
+    }
+
+    async addToCart(productId: number) {
+        const button = this.addToCartButton(productId);
+        await button.waitFor({ state: 'visible', timeout: 10000 });
+        await button.click({ force: true });
+        await this.page.waitForSelector('#cartModal', { state: 'visible', timeout: 10000 });
     }
 
     async getProductDetails(productId: number) {
-
         const product = this.productCard(productId);
-
         return {
             id: productId,
             name: await product.locator('.productinfo p').innerText(),
@@ -37,12 +55,26 @@ class ProductsPage {
         };
     }
 
-    get continueShopping() {
-        return this.page.getByText('Continue Shopping');
+    get continueShoppingButton() {
+        return this.page.locator('#cartModal button:has-text("Continue Shopping")');
     }
 
-    get viewCart() {
-        return this.page.getByRole('link', { name: 'View Cart' });
+    async continueShopping() {
+        await this.page.waitForSelector('#cartModal', { state: 'visible', timeout: 10000 });
+        await this.continueShoppingButton.click({ force: true });
+        await this.page.waitForSelector('#cartModal', { state: 'hidden', timeout: 10000 });
+    }
+
+    get viewCartButton() {
+        return this.page.locator('#cartModal a:has-text("View Cart")');
+    }
+
+    async viewCart() {
+        await this.page.waitForSelector('#cartModal', { state: 'visible', timeout: 10000 });
+        await Promise.all([
+            this.page.waitForURL('**/view_cart', { timeout: 10000 }),
+            this.viewCartButton.click({ force: true })
+        ]);
     }
 
     get productInformation() {

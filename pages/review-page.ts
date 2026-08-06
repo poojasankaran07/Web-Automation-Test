@@ -29,6 +29,13 @@ class ReviewPage {
     get reviewSuccessMessage() {
         return this.page.getByText('Thank you for your review.');
     }
+
+    async submitReview(reviewData: { name: string; email: string; review: string }) {
+        await this.reviewerName.fill(reviewData.name);
+        await this.reviewerEmail.fill(reviewData.email);
+        await this.reviewerText.fill(reviewData.review);
+        await this.reviewSubmitButton.click();
+    }
 }
 
 export default ReviewPage;

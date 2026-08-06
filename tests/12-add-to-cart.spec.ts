@@ -1,41 +1,40 @@
 import { test, expect } from '../fixtures/test-fixtures';
-import common from '../utils/common-functions';
 
 test.describe('Add Products in Cart', () => {
-    test('Add Products in Cart Flow', async ({ page, homePage, productsPage, cartPage }) => {
+    test('Add Products in Cart Flow', async ({ homePage, productsPage, cartPage }) => {
         const addedProducts: {
             id: number;
             name: string;
             price: string;
         }[] = [];
 
-        await test.step('Verify that home page is visible successfully', async () => {
-            await page.goto('/');
+        await test.step('Open home page and verify it is visible', async () => {
+            await homePage.open();
             await expect(homePage.automationLogoImage).toBeVisible();
         })
 
-        await test.step(`Click on 'Products' button & verify user is navigated to ALL PRODUCTS page`, async () => {
-            await common.safeClick(page, homePage.products);
+        await test.step(`Navigate to products page`, async () => {
+            await homePage.goToProducts();
         })
 
-        await test.step(`Hover over first product and click 'Add to cart & click 'Continue Shopping' button'`, async () => {
+        await test.step(`Hover over first product, add to cart and continue shopping`, async () => {
             await productsPage.productCard(1).hover();
 
             const product1 = await productsPage.getProductDetails(1);
-            await common.safeClick(page, productsPage.addToCart(1));
+            await productsPage.addToCart(1);
             addedProducts.push(product1);
 
-            await common.safeClick(page, productsPage.continueShopping);
+            await productsPage.continueShopping();
         })
 
-        await test.step(`Hover over second product and click 'Add to cart & click 'View Cart' button'`, async () => {
+        await test.step(`Hover over second product, add to cart and view cart`, async () => {
             await productsPage.productCard(2).hover();
 
             const product2 = await productsPage.getProductDetails(2);
-            await common.safeClick(page, productsPage.addToCart(2));
+            await productsPage.addToCart(2);
             addedProducts.push(product2);
 
-            await common.safeClick(page, productsPage.viewCart);
+            await productsPage.viewCart();
 
         })
 

@@ -26,6 +26,11 @@ class LoginPage {
         return this.page.getByText('Your email or password is incorrect!');
     }
 
+    async login(email: string, password: string) {
+        await this.loginEmail.fill(email);
+        await this.loginPassword.fill(password);
+        await this.loginButton.click();
+    }
 }
 
 export default LoginPage;

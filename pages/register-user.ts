@@ -126,6 +126,79 @@ class RegisterUser {
     get emailExistError() {
         return this.page.getByText('Email Address already exist!');
     }
+
+    async startSignup(name: string, email: string) {
+        await this.signupName.fill(name);
+        await this.signupEmail.fill(email);
+        await this.signupButton.click();
+    }
+
+    async fillAccountInformation(user: {
+        name: string;
+        email: string;
+        password: string;
+        title?: 'Mr.' | 'Mrs.';
+        dobDay?: string;
+        dobMonth?: string;
+        dobYear?: string;
+        newsletter?: boolean;
+        specialOffers?: boolean;
+        firstName?: string;
+        lastName?: string;
+        company?: string;
+        address?: string;
+        address2?: string;
+        country?: string;
+        state?: string;
+        city?: string;
+        zipcode?: string;
+        mobileNumber?: string;
+    }) {
+        const title = user.title ?? 'Mr.';
+        if (title === 'Mr.') {
+            await this.mrRadio.check();
+        } else {
+            await this.mrsRadio.check();
+        }
+
+        await this.accountInfoPassword.fill(user.password);
+        await this.dobDay.selectOption(user.dobDay ?? '10');
+        await this.dobMonth.selectOption(user.dobMonth ?? 'January');
+        await this.dobYear.selectOption(user.dobYear ?? '2000');
+
+        if (user.newsletter) {
+            await this.newsletterSignupCheckbox.check();
+        }
+
+        if (user.specialOffers) {
+            await this.specialOfferCheckbox.check();
+        }
+
+        await this.addressInfoFirstName.fill(user.firstName ?? user.name);
+        await this.addressInfoLastName.fill(user.lastName ?? user.name);
+        await this.addressInfoCompany.fill(user.company ?? '');
+        await this.addressInfoAddress.fill(user.address ?? '');
+        await this.addressInfoAddress2.fill(user.address2 ?? '');
+        if (user.country) {
+            await this.addressInfoCountry.selectOption(user.country);
+        }
+        await this.addressInfoState.fill(user.state ?? '');
+        await this.addressInfoCity.fill(user.city ?? '');
+        await this.addressInfoZipcode.fill(user.zipcode ?? '');
+        await this.addressInfoMobileNumber.fill(user.mobileNumber ?? '');
+    }
+
+    async createAccount() {
+        await this.createAccountButton.click();
+    }
+
+    async continueAfterAccountCreation() {
+        await this.continueButtonAfterAccountCreationAndDeletion.click();
+    }
+
+    async deleteAccount() {
+        await this.page.getByRole('link', { name: ' Delete Account' }).click();
+    }
 }
 
 export default RegisterUser;
