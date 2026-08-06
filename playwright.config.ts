@@ -1,26 +1,26 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
-  reporter: [['html'], ['allure-playwright']],
-  
+  reporter: [["html"], ["allure-playwright"]],
+
   use: {
-    baseURL: 'https://automationexercise.com',
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    headless: process.env.CI ? true: false,
-    testIdAttribute: 'data-qa',
+    baseURL: "https://automationexercise.com",
+    trace: "on-first-retry",
+    screenshot: "only-on-failure",
+    headless: process.env.CI ? true : false,
+    testIdAttribute: "data-qa",
   },
 
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      name: "chromium",
+      use: { ...devices["Desktop Chrome"] },
     },
 
     // {

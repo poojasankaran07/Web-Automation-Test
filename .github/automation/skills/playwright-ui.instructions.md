@@ -1,6 +1,6 @@
 ---
 description: UI-specific Playwright testing standards and best practices
-applyTo: './tests/**'
+applyTo: "./tests/**"
 ---
 
 **INSTRUCTION REFERENCE: When reviewing code against these rules, ALWAYS include in your PR comment:**
@@ -17,15 +17,17 @@ You are an expert-level Playwright Automation Tester specializing in UI testing.
 ### Preferred Locators
 
 Use data-testid attributes as the primary locator strategy:
+
 ```typescript
 // Good: Stable and maintainable
 await page.locator('[data-testid="submit-button"]').click();
-await page.locator('[data-testid="user-email-input"]').fill('user@example.com');
+await page.locator('[data-testid="user-email-input"]').fill("user@example.com");
 ```
 
 ### Alternative Locators (When data-testid Not Available)
 
 Order of preference:
+
 1. Role-based locators (most semantic)
 2. Text content (for user-visible text)
 3. CSS selectors (for stable structural elements)
@@ -33,20 +35,21 @@ Order of preference:
 
 ```typescript
 // Good: Role-based
-await page.getByRole('button', { name: 'Submit' }).click();
-await page.getByRole('textbox', { name: 'Email' }).fill('user@example.com');
+await page.getByRole("button", { name: "Submit" }).click();
+await page.getByRole("textbox", { name: "Email" }).fill("user@example.com");
 
 // Acceptable: Text content
-await page.getByText('Welcome back').click();
+await page.getByText("Welcome back").click();
 
 // Avoid: Brittle selectors
-await page.locator('div:nth-child(3) > button').click(); // Bad
+await page.locator("div:nth-child(3) > button").click(); // Bad
 await page.locator('//div[@class="button"]').click(); // Bad - XPath
 ```
 
 ### Locator Anti-Patterns
 
 AI agents must avoid:
+
 - nth-child selectors (brittle)
 - XPath selectors (hard to maintain)
 - CSS selectors based on styling (class names with "red", "large", etc.)
@@ -58,6 +61,7 @@ AI agents must avoid:
 ### Click Actions
 
 Use appropriate click methods:
+
 ```typescript
 // Standard click
 await page.locator('[data-testid="button"]').click();
@@ -72,9 +76,10 @@ await page.locator('[data-testid="button"]').dblclick();
 ### Input Actions
 
 Use fill for text inputs, check/uncheck for checkboxes:
+
 ```typescript
 // Text input
-await page.locator('[data-testid="email-input"]').fill('user@example.com');
+await page.locator('[data-testid="email-input"]').fill("user@example.com");
 
 // Checkbox
 await page.locator('[data-testid="terms-checkbox"]').check();
@@ -83,12 +88,13 @@ await page.locator('[data-testid="terms-checkbox"]').check();
 await page.locator('[data-testid="option-1"]').check();
 
 // Select dropdown
-await page.locator('[data-testid="country-select"]').selectOption('US');
+await page.locator('[data-testid="country-select"]').selectOption("US");
 ```
 
 ### Wait Strategies
 
 Rely on Playwright's auto-waiting:
+
 ```typescript
 // Good: Auto-waits for element to be visible and actionable
 await page.locator('[data-testid="button"]').click();
@@ -98,8 +104,8 @@ await page.waitForTimeout(1000);
 await page.locator('[data-testid="button"]').click();
 
 // Good: Wait for specific condition when needed
-await page.waitForLoadState('networkidle');
-await page.waitForSelector('[data-testid="content"]', { state: 'visible' });
+await page.waitForLoadState("networkidle");
+await page.waitForSelector('[data-testid="content"]', { state: "visible" });
 ```
 
 ## Page Object Model
@@ -107,16 +113,23 @@ await page.waitForSelector('[data-testid="content"]', { state: 'visible' });
 ### Page Object Structure
 
 Create page objects for reusable UI flows:
+
 ```typescript
 class LoginPage {
   constructor(private page: Page) {}
 
-  private readonly emailInput = this.page.locator('[data-testid="email-input"]');
-  private readonly passwordInput = this.page.locator('[data-testid="password-input"]');
-  private readonly submitButton = this.page.locator('[data-testid="submit-button"]');
+  private readonly emailInput = this.page.locator(
+    '[data-testid="email-input"]',
+  );
+  private readonly passwordInput = this.page.locator(
+    '[data-testid="password-input"]',
+  );
+  private readonly submitButton = this.page.locator(
+    '[data-testid="submit-button"]',
+  );
 
   async navigate() {
-    await this.page.goto('/login');
+    await this.page.goto("/login");
   }
 
   async login(email: string, password: string) {
@@ -134,11 +147,13 @@ class LoginPage {
 ### When to Use Page Objects
 
 Use page objects when:
+
 - UI flows are reused across multiple tests
 - Complex interactions need to be abstracted
 - It improves test readability
 
 Do not use page objects when:
+
 - It hides test intent
 - It's a one-off interaction
 - It adds unnecessary abstraction
@@ -148,21 +163,22 @@ Do not use page objects when:
 ### Storage State for Login
 
 Use storage state to persist authentication:
+
 ```typescript
 // Setup: Create storage state once
-test('authenticate user', async ({ page }) => {
-  await page.goto('/login');
-  await page.locator('[data-testid="email"]').fill('user@example.com');
-  await page.locator('[data-testid="password"]').fill('password');
+test("authenticate user", async ({ page }) => {
+  await page.goto("/login");
+  await page.locator('[data-testid="email"]').fill("user@example.com");
+  await page.locator('[data-testid="password"]').fill("password");
   await page.locator('[data-testid="submit"]').click();
-  await page.context().storageState({ path: 'auth-state.json' });
+  await page.context().storageState({ path: "auth-state.json" });
 });
 
 // Usage: Reuse storage state
-test.use({ storageState: 'auth-state.json' });
+test.use({ storageState: "auth-state.json" });
 
-test('should access protected page', async ({ page }) => {
-  await page.goto('/dashboard');
+test("should access protected page", async ({ page }) => {
+  await page.goto("/dashboard");
   // Already authenticated
 });
 ```
@@ -170,18 +186,19 @@ test('should access protected page', async ({ page }) => {
 ### Project Dependencies for Cookies
 
 Use project dependencies for initializing cookies:
+
 ```typescript
 // playwright.config.ts
 projects: [
-  { name: 'setup', testMatch: /.*\.setup\.ts/ },
+  { name: "setup", testMatch: /.*\.setup\.ts/ },
   {
-    name: 'tests',
-    dependencies: ['setup'],
+    name: "tests",
+    dependencies: ["setup"],
     use: {
-      storageState: 'auth-state.json',
+      storageState: "auth-state.json",
     },
   },
-]
+];
 ```
 
 ## UI Test Structure
@@ -189,19 +206,21 @@ projects: [
 ### Basic UI Test Pattern
 
 ```typescript
-test.describe('User Dashboard', () => {
+test.describe("User Dashboard", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/dashboard');
+    await page.goto("/dashboard");
   });
 
-  test('should display user profile', async ({ page, expect }) => {
-    await test.step('Navigate to profile section', async () => {
+  test("should display user profile", async ({ page, expect }) => {
+    await test.step("Navigate to profile section", async () => {
       await page.locator('[data-testid="profile-link"]').click();
     });
 
-    await test.step('Verify profile information', async () => {
+    await test.step("Verify profile information", async () => {
       await expect(page.locator('[data-testid="user-name"]')).toBeVisible();
-      await expect(page.locator('[data-testid="user-email"]')).toContainText('@');
+      await expect(page.locator('[data-testid="user-email"]')).toContainText(
+        "@",
+      );
     });
   });
 });
@@ -210,23 +229,24 @@ test.describe('User Dashboard', () => {
 ### Test Steps for UI Tests
 
 Use test.step() to organize UI interactions:
+
 ```typescript
-test('should complete checkout flow', async ({ page, expect }) => {
-  await test.step('Add item to cart', async () => {
+test("should complete checkout flow", async ({ page, expect }) => {
+  await test.step("Add item to cart", async () => {
     await page.locator('[data-testid="add-to-cart"]').click();
   });
 
-  await test.step('Navigate to checkout', async () => {
+  await test.step("Navigate to checkout", async () => {
     await page.locator('[data-testid="cart-icon"]').click();
     await page.locator('[data-testid="checkout-button"]').click();
   });
 
-  await test.step('Complete payment', async () => {
-    await page.locator('[data-testid="payment-form"]').fill('card details');
+  await test.step("Complete payment", async () => {
+    await page.locator('[data-testid="payment-form"]').fill("card details");
     await page.locator('[data-testid="submit-payment"]').click();
   });
 
-  await test.step('Verify success', async () => {
+  await test.step("Verify success", async () => {
     await expect(page.locator('[data-testid="success-message"]')).toBeVisible();
   });
 });
@@ -237,6 +257,7 @@ test('should complete checkout flow', async ({ page, expect }) => {
 ### Screenshot Configuration
 
 Configure screenshots in playwright.config.ts:
+
 ```typescript
 use: {
   screenshot: 'only-on-failure', // or 'on', 'off'
@@ -247,18 +268,20 @@ use: {
 ### Manual Screenshots
 
 Take screenshots at key points when needed:
+
 ```typescript
-await test.step('Verify dashboard loaded', async () => {
+await test.step("Verify dashboard loaded", async () => {
   await expect(page.locator('[data-testid="dashboard"]')).toBeVisible();
-  await page.screenshot({ path: 'dashboard-loaded.png' });
+  await page.screenshot({ path: "dashboard-loaded.png" });
 });
 ```
 
 ### Full Page Screenshots
 
 Capture full page when needed:
+
 ```typescript
-await page.screenshot({ path: 'full-page.png', fullPage: true });
+await page.screenshot({ path: "full-page.png", fullPage: true });
 ```
 
 ## UI Assertions
@@ -280,23 +303,30 @@ await expect(page.locator('[data-testid="element"]')).toHaveCount(1);
 
 ```typescript
 // Exact text match
-await expect(page.locator('[data-testid="title"]')).toHaveText('Welcome');
+await expect(page.locator('[data-testid="title"]')).toHaveText("Welcome");
 
 // Text contains
-await expect(page.locator('[data-testid="message"]')).toContainText('success');
+await expect(page.locator('[data-testid="message"]')).toContainText("success");
 
 // Text matches regex
-await expect(page.locator('[data-testid="email"]')).toHaveText(/^[\\w\\.]+@[\\w\\.]+$/);
+await expect(page.locator('[data-testid="email"]')).toHaveText(
+  /^[\\w\\.]+@[\\w\\.]+$/,
+);
 ```
 
 ### Attribute Assertions
 
 ```typescript
 // Attribute value
-await expect(page.locator('[data-testid="link"]')).toHaveAttribute('href', '/dashboard');
+await expect(page.locator('[data-testid="link"]')).toHaveAttribute(
+  "href",
+  "/dashboard",
+);
 
 // Attribute exists
-await expect(page.locator('[data-testid="button"]')).toHaveAttribute('disabled');
+await expect(page.locator('[data-testid="button"]')).toHaveAttribute(
+  "disabled",
+);
 ```
 
 ### State Assertions
@@ -306,10 +336,12 @@ await expect(page.locator('[data-testid="button"]')).toHaveAttribute('disabled')
 await expect(page.locator('[data-testid="checkbox"]')).toBeChecked();
 
 // Input value
-await expect(page.locator('[data-testid="input"]')).toHaveValue('expected value');
+await expect(page.locator('[data-testid="input"]')).toHaveValue(
+  "expected value",
+);
 
 // Select value
-await expect(page.locator('[data-testid="select"]')).toHaveValue('option1');
+await expect(page.locator('[data-testid="select"]')).toHaveValue("option1");
 ```
 
 ## Handling Dynamic Content
@@ -318,26 +350,31 @@ await expect(page.locator('[data-testid="select"]')).toHaveValue('option1');
 
 ```typescript
 // Wait for element to appear
-await page.waitForSelector('[data-testid="dynamic-content"]', { state: 'visible' });
+await page.waitForSelector('[data-testid="dynamic-content"]', {
+  state: "visible",
+});
 
 // Wait for network request
-await page.waitForResponse(response => 
-  response.url().includes('/api/data') && response.status() === 200
+await page.waitForResponse(
+  (response) =>
+    response.url().includes("/api/data") && response.status() === 200,
 );
 
 // Wait for navigation
-await page.waitForURL('**/dashboard');
+await page.waitForURL("**/dashboard");
 ```
 
 ### Handling Loading States
 
 ```typescript
 // Wait for loading spinner to disappear
-await page.waitForSelector('[data-testid="loading-spinner"]', { state: 'hidden' });
+await page.waitForSelector('[data-testid="loading-spinner"]', {
+  state: "hidden",
+});
 
 // Wait for content to load
-await page.waitForLoadState('networkidle');
-await page.waitForLoadState('domcontentloaded');
+await page.waitForLoadState("networkidle");
+await page.waitForLoadState("domcontentloaded");
 ```
 
 ## Cross-Browser Testing
@@ -345,12 +382,13 @@ await page.waitForLoadState('domcontentloaded');
 ### Browser Configuration
 
 Configure multiple browsers in playwright.config.ts:
+
 ```typescript
 projects: [
-  { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
-  { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
-  { name: 'webkit', use: { ...devices['Desktop Safari'] } },
-]
+  { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+  { name: "firefox", use: { ...devices["Desktop Firefox"] } },
+  { name: "webkit", use: { ...devices["Desktop Safari"] } },
+];
 ```
 
 ### Browser-Specific Considerations
@@ -370,17 +408,17 @@ test.use({
 
 // Or use device emulation
 test.use({
-  ...devices['iPhone 12'],
+  ...devices["iPhone 12"],
 });
 ```
 
 ### Responsive Test Patterns
 
 ```typescript
-test('should display mobile menu on small screens', async ({ page }) => {
+test("should display mobile menu on small screens", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
-  await page.goto('/');
-  
+  await page.goto("/");
+
   await expect(page.locator('[data-testid="mobile-menu"]')).toBeVisible();
   await expect(page.locator('[data-testid="desktop-menu"]')).toBeHidden();
 });
@@ -391,6 +429,7 @@ test('should display mobile menu on small screens', async ({ page }) => {
 ### Required Report Information
 
 All UI tests must include in reports:
+
 - Environment (dev/stage/prod)
 - Browser and version
 - Viewport size
@@ -403,22 +442,23 @@ All UI tests must include in reports:
 ### Test Steps for UI Tests
 
 Organize UI tests with clear steps:
+
 ```typescript
-test('should complete user registration', async ({ page, expect }) => {
-  await test.step('Navigate to registration page', async () => {
-    await page.goto('/register');
+test("should complete user registration", async ({ page, expect }) => {
+  await test.step("Navigate to registration page", async () => {
+    await page.goto("/register");
   });
 
-  await test.step('Fill registration form', async () => {
-    await page.locator('[data-testid="name-input"]').fill('John Doe');
-    await page.locator('[data-testid="email-input"]').fill('john@example.com');
+  await test.step("Fill registration form", async () => {
+    await page.locator('[data-testid="name-input"]').fill("John Doe");
+    await page.locator('[data-testid="email-input"]').fill("john@example.com");
   });
 
-  await test.step('Submit form', async () => {
+  await test.step("Submit form", async () => {
     await page.locator('[data-testid="submit-button"]').click();
   });
 
-  await test.step('Verify success message', async () => {
+  await test.step("Verify success message", async () => {
     await expect(page.locator('[data-testid="success-message"]')).toBeVisible();
   });
 });
@@ -429,6 +469,7 @@ test('should complete user registration', async ({ page, expect }) => {
 ### Test Data for UI Tests
 
 Store test data in JSON files or TypeScript constants for simplicity and maintainability:
+
 ```typescript
 // test-data/users.json
 {
@@ -451,12 +492,14 @@ const userData = testData.validUser;
 ```
 
 JSON files are preferred because:
+
 - Simple and readable
 - Easy to maintain and update
 - No code complexity
 - Can be shared across tests
 - Version control friendly
-```
+
+````
 
 Always use deterministic data. Do not use random generators.
 
@@ -469,7 +512,7 @@ test.afterEach(async ({ page }) => {
   await page.goto('/admin/cleanup');
   await page.locator('[data-testid="cleanup-test-data"]').click();
 });
-```
+````
 
 ## Common UI Test Anti-Patterns
 
@@ -491,44 +534,55 @@ AI agents must detect and fix:
 ### Accessibility Assertions
 
 Use Playwright's accessibility features:
+
 ```typescript
 // Check accessibility
 const accessibilitySnapshot = await page.accessibility.snapshot();
-expect(accessibilitySnapshot).toHaveAccessibleName('Submit button');
+expect(accessibilitySnapshot).toHaveAccessibleName("Submit button");
 
 // Check ARIA attributes
-await expect(page.locator('[data-testid="button"]')).toHaveAttribute('aria-label', 'Submit form');
+await expect(page.locator('[data-testid="button"]')).toHaveAttribute(
+  "aria-label",
+  "Submit form",
+);
 ```
 
 ### Keyboard Navigation
 
 Test keyboard navigation:
+
 ```typescript
 await page.locator('[data-testid="input"]').focus();
-await page.keyboard.press('Tab');
+await page.keyboard.press("Tab");
 await expect(page.locator('[data-testid="next-input"]')).toBeFocused();
 ```
 
 ## UI Test Tagging
 
 Tag UI tests appropriately:
+
 ```typescript
-test.describe('User Interface', () => {
-  test.describe.configure({ tag: '@ui' });
+test.describe("User Interface", () => {
+  test.describe.configure({ tag: "@ui" });
 
-  test('should render login page', { tag: ['@ui', '@smoke'] }, async () => {
+  test("should render login page", { tag: ["@ui", "@smoke"] }, async () => {
     // Test code
   });
 
-  test('should handle form validation', { tag: ['@ui', '@regression'] }, async () => {
-    // Test code
-  });
+  test(
+    "should handle form validation",
+    { tag: ["@ui", "@regression"] },
+    async () => {
+      // Test code
+    },
+  );
 });
 ```
 
 ## AI Agent Summary for UI Tests
 
 When writing or refactoring Playwright UI tests, you must:
+
 1. Use data-testid attributes as primary locator strategy
 2. Avoid brittle locators (nth-child, XPath, position-based)
 3. Rely on Playwright's auto-waiting; avoid manual timeouts
