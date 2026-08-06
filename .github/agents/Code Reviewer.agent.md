@@ -3,12 +3,6 @@ name: Code Reviewer
 description: "Use when you need to review code and suggest fixes based on repository and UI automation guidance."
 tools: [read, search]
 user-invocable: true
-reference_files:
-  [
-    ".github/automation/review/CODE_REVIEW.md",
-    ".github/automation/skills/playwright-ui.instructions.md",
-    ".github/automation/skills/playwright-generic.instructions.md",
-  ]
 ---
 
 You review code changes and provide concise, actionable feedback.

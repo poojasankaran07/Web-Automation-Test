@@ -3,11 +3,6 @@ name: Playwright UI Test Generator and Reviewer
 description: "Use when you need to generate or review Playwright UI automation tests."
 tools: [read, edit, search]
 user-invocable: true
-reference_files:
-  [
-    ".github/automation/skills/playwright-ui.instructions.md",
-    ".github/automation/skills/playwright-generic.instructions.md",
-  ]
 ---
 
 You are a Playwright UI automation specialist.
