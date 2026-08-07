@@ -44,7 +44,7 @@ class ProductsPage {
   async addToCart(productId: number) {
     const button = this.addToCartButton(productId);
     await button.waitFor({ state: "visible", timeout: 10000 });
-    await common.safeClick(this.page, button, { force: true });
+    await common.safeClick(this.page, button);
     await this.page.waitForSelector("#cartModal", {
       state: "visible",
       timeout: 10000,
@@ -69,7 +69,7 @@ class ProductsPage {
       state: "visible",
       timeout: 10000,
     });
-    await common.safeClick(this.page, this.continueShoppingButton, { force: true });
+    await common.safeClick(this.page, this.continueShoppingButton);
     await this.page.waitForSelector("#cartModal", {
       state: "hidden",
       timeout: 10000,
