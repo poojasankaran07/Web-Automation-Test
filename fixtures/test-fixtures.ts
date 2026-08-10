@@ -12,6 +12,7 @@ import CheckoutPage from "../pages/checkout-page";
 import CategoryPage from "../pages/category-page";
 import ReviewPage from "../pages/review-page";
 import RecommendPage from "../pages/recommend";
+import BrandPage from "../pages/brand-page";
 
 type Pages = {
   homePage: HomePage;
@@ -25,6 +26,7 @@ type Pages = {
   cartPage: CartPage;
   checkoutPage: CheckoutPage;
   categoryPage: CategoryPage;
+  brandPage: BrandPage;
   reviewPage: ReviewPage;
   recommendPage: RecommendPage;
 };
@@ -72,6 +74,10 @@ export const test = base.extend<Pages>({
 
   categoryPage: async ({ page }, use) => {
     await use(new CategoryPage(page));
+  },
+
+  brandPage: async ({ page }, use) => {
+    await use(new BrandPage(page));
   },
 
   reviewPage: async ({ page }, use) => {

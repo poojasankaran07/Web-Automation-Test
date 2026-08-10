@@ -12,7 +12,7 @@ export default defineConfig({
     baseURL: "https://automationexercise.com",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
-    video: 'retain-on-failure',
+    video: "retain-on-failure",
     headless: process.env.CI ? true : false,
     testIdAttribute: "data-qa",
   },
