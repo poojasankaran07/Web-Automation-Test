@@ -1,18 +1,18 @@
 import { test as base } from "@playwright/test";
-import HomePage from "../pages/home-page";
-import LoginPage from "../pages/login-page";
-import RegisterUser from "../pages/register-user";
-import TestCasesPage from "../pages/test-cases";
-import ProductsPage from "../pages/product-details";
-import SearchProduct from "../pages/search-product";
-import ContactUsPage from "../pages/contact-us";
-import SubscriptionPage from "../pages/subscription";
-import CartPage from "../pages/cart-page";
-import CheckoutPage from "../pages/checkout-page";
-import CategoryPage from "../pages/category-page";
-import ReviewPage from "../pages/review-page";
-import RecommendPage from "../pages/recommend";
-import BrandPage from "../pages/brand-page";
+import HomePage from "../pages/automation-exercise/home-page";
+import LoginPage from "../pages/automation-exercise/login-page";
+import RegisterUser from "../pages/automation-exercise/register-user";
+import TestCasesPage from "../pages/automation-exercise/test-cases";
+import ProductsPage from "../pages/automation-exercise/product-details";
+import SearchProduct from "../pages/automation-exercise/search-product";
+import ContactUsPage from "../pages/automation-exercise/contact-us";
+import SubscriptionPage from "../pages/automation-exercise/subscription";
+import CartPage from "../pages/automation-exercise/cart-page";
+import CheckoutPage from "../pages/automation-exercise/checkout-page";
+import CategoryPage from "../pages/automation-exercise/category-page";
+import ReviewPage from "../pages/automation-exercise/review-page";
+import RecommendPage from "../pages/automation-exercise/recommend";
+import BrandPage from "../pages/automation-exercise/brand-page";
 
 type Pages = {
   homePage: HomePage;
