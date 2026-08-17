@@ -35,7 +35,6 @@ export default defineConfig({
 
       use: {
         baseURL: "https://testing.qaautomationlabs.com",
-        testIdAttribute: "data-testid",
         browserName: "chromium",
         viewport: null,
         launchOptions: {
