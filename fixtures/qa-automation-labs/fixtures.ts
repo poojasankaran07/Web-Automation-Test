@@ -5,6 +5,7 @@ import RadioButtonPage from "../../pages/qa-automation-labs/radio-button-page";
 import DropdownPage from "../../pages/qa-automation-labs/dropdown-page";
 import FormsPage from "../../pages/qa-automation-labs/forms-page";
 import WebtablePage from "../../pages/qa-automation-labs/webtable-page";
+import IframePage from "../../pages/qa-automation-labs/iframe-page";
 
 type Pages = {
     menusPage: MenusPage;
@@ -13,6 +14,7 @@ type Pages = {
     dropdownPage: DropdownPage;
     formsPage: FormsPage;
     webtablePage: WebtablePage;
+    iframePage: IframePage;
 };
 
 export const test = base.extend<Pages>({
@@ -38,6 +40,10 @@ export const test = base.extend<Pages>({
 
     webtablePage: async ({ page }, use) => {
         await use(new WebtablePage(page));
+    },
+
+    iframePage: async ({ page }, use) => {
+        await use(new IframePage(page));
     },
 });
 
