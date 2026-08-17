@@ -7,58 +7,41 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: 1,
   reporter: [["html"], ["allure-playwright"]],
-
   use: {
-    baseURL: "https://automationexercise.com",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
     video: "retain-on-failure",
     headless: process.env.CI ? true : false,
-    testIdAttribute: "data-qa",
   },
 
-  /* Configure projects for major browsers */
   projects: [
+    // Automation Exercise
     {
-      name: "chromium",
-      use: { ...devices["Desktop Chrome"] },
+      name: "automation-exercise",
+      testMatch: /.*automation-exercise.*\.spec\.ts/,
+      use: {
+        baseURL: "https://automationexercise.com",
+        testIdAttribute: "data-qa",
+        browserName: "chromium",
+        viewport: null,
+      },
     },
 
-    // {
-    //   name: 'firefox',
-    //   use: { ...devices['Desktop Firefox'] },
-    // },
+    // QA Automation Labs
+    {
+      name: "qa-automation-labs",
 
-    // {
-    //   name: 'webkit',
-    //   use: { ...devices['Desktop Safari'] },
-    // },
+      testMatch: /.*qa-automation-labs.*\.spec\.ts/,
 
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
+      use: {
+        baseURL: "https://testing.qaautomationlabs.com",
+        testIdAttribute: "data-testid",
+        browserName: "chromium",
+        viewport: null,
+        launchOptions: {
+          args: ["--start-maximized"],
+        },
+      },
+    },
   ],
-
-  /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
 });
