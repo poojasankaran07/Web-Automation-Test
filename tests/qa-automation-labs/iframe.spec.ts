@@ -1,7 +1,7 @@
 import { test, expect } from "../../fixtures/qa-automation-labs/fixtures";
 
-test.describe.only("Web Table Flow", () => {
-  test("Web Table Flow", async ({ page, menusPage, iframePage }) => {
+test.describe("Iframe Flow", () => {
+  test("Iframe Flow", async ({ page, menusPage, iframePage }) => {
     await page.goto("https://testing.qaautomationlabs.com/");
     await menusPage.testingMenu.click();
     await expect(menusPage.dashboardBanner).toBeVisible();
