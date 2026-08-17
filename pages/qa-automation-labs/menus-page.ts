@@ -6,12 +6,12 @@ class MenusPage {
     this.page = page;
   }
 
-  get testingMenu () {
-    return this.page.getByTestId('nav-testing');
+  get testingMenu() {
+    return this.page.getByTestId("nav-testing");
   }
 
-  get dashboardBanner () {
-    return this.page.getByTestId('dashboard-hero');
+  get dashboardBanner() {
+    return this.page.getByTestId("dashboard-hero");
   }
 }
 

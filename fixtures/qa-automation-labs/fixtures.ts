@@ -8,43 +8,43 @@ import WebtablePage from "../../pages/qa-automation-labs/webtable-page";
 import IframePage from "../../pages/qa-automation-labs/iframe-page";
 
 type Pages = {
-    menusPage: MenusPage;
-    checkBoxPage: CheckBoxPage;
-    radioButtonPage: RadioButtonPage;
-    dropdownPage: DropdownPage;
-    formsPage: FormsPage;
-    webtablePage: WebtablePage;
-    iframePage: IframePage;
+  menusPage: MenusPage;
+  checkBoxPage: CheckBoxPage;
+  radioButtonPage: RadioButtonPage;
+  dropdownPage: DropdownPage;
+  formsPage: FormsPage;
+  webtablePage: WebtablePage;
+  iframePage: IframePage;
 };
 
 export const test = base.extend<Pages>({
-    menusPage: async ({ page }, use) => {
-        await use(new MenusPage(page));
-    },
+  menusPage: async ({ page }, use) => {
+    await use(new MenusPage(page));
+  },
 
-    checkBoxPage: async ({ page }, use) => {
-        await use(new CheckBoxPage(page));
-    },
+  checkBoxPage: async ({ page }, use) => {
+    await use(new CheckBoxPage(page));
+  },
 
-    radioButtonPage: async ({ page }, use) => {
-        await use(new RadioButtonPage(page));
-    },
+  radioButtonPage: async ({ page }, use) => {
+    await use(new RadioButtonPage(page));
+  },
 
-    dropdownPage: async ({ page }, use) => {
-        await use(new DropdownPage(page));
-    },
+  dropdownPage: async ({ page }, use) => {
+    await use(new DropdownPage(page));
+  },
 
-    formsPage: async ({ page }, use) => {
-        await use(new FormsPage(page));
-    },
+  formsPage: async ({ page }, use) => {
+    await use(new FormsPage(page));
+  },
 
-    webtablePage: async ({ page }, use) => {
-        await use(new WebtablePage(page));
-    },
+  webtablePage: async ({ page }, use) => {
+    await use(new WebtablePage(page));
+  },
 
-    iframePage: async ({ page }, use) => {
-        await use(new IframePage(page));
-    },
+  iframePage: async ({ page }, use) => {
+    await use(new IframePage(page));
+  },
 });
 
 export { expect } from "@playwright/test";
