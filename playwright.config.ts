@@ -40,10 +40,6 @@ export default defineConfig({
           width: 1920,
           height: 1080,
         },
-        // viewport: null,
-        // launchOptions: {
-        //   args: ["--start-maximized"],
-        // },
       },
     },
   ],
