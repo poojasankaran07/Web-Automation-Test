@@ -36,10 +36,14 @@ export default defineConfig({
       use: {
         baseURL: "https://testing.qaautomationlabs.com",
         browserName: "chromium",
-        viewport: null,
-        launchOptions: {
-          args: ["--start-maximized"],
+        viewport: {
+          width: 1920,
+          height: 1080,
         },
+        // viewport: null,
+        // launchOptions: {
+        //   args: ["--start-maximized"],
+        // },
       },
     },
   ],
