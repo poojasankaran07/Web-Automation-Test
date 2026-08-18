@@ -1,8 +1,11 @@
 import { test, expect } from "../../fixtures/qa-automation-labs/fixtures";
 
-test.describe("CheckBox Flow", () => {
+test.describe.only("CheckBox Flow", () => {
   test("CheckBox Flow", async ({ page, menusPage, checkBoxPage }) => {
-    await page.goto("https://testing.qaautomationlabs.com/");
+    // await page.goto("https://testing.qaautomationlabs.com/");
+    await page.goto("/", {
+      waitUntil: "domcontentloaded",
+    });
     await menusPage.testingMenu.click();
     await expect(menusPage.dashboardBanner).toBeVisible();
     await checkBoxPage.checkBoxMenu.click();
