@@ -12,6 +12,9 @@ import NotificationPage from "../../pages/qa-automation-labs/notification-page";
 import JsAlertPage from "../../pages/qa-automation-labs/js-alert-page";
 import DownloadPage from "../../pages/qa-automation-labs/file-download-page";
 import FileUploadPage from "../../pages/qa-automation-labs/file-upload-page";
+import WindowModalPage from "../../pages/qa-automation-labs/window-modal-page";
+import ListBoxPage from "../../pages/qa-automation-labs/list-box-page";
+import SliderPage from "../../pages/qa-automation-labs/slider-page";
 
 type Pages = {
   menusPage: MenusPage;
@@ -27,6 +30,9 @@ type Pages = {
   jsAlertPage: JsAlertPage;
   downloadPage: DownloadPage;
   fileUploadPage: FileUploadPage;
+  windowModalPage: WindowModalPage;
+  listBoxPage: ListBoxPage;
+  sliderPage: SliderPage;
 };
 
 export const test = base.extend<Pages>({
@@ -80,6 +86,18 @@ export const test = base.extend<Pages>({
 
   fileUploadPage: async ({ page }, use) => {
     await use(new FileUploadPage(page));
+  },
+
+  windowModalPage: async ({ page }, use) => {
+    await use(new WindowModalPage(page));
+  },
+
+  listBoxPage: async ({ page }, use) => {
+    await use(new ListBoxPage(page));
+  },
+
+  sliderPage: async ({ page }, use) => {
+    await use(new SliderPage(page));
   },
 });
 
