@@ -2,7 +2,9 @@ import { test, expect } from "../../fixtures/qa-automation-labs/fixtures";
 
 test.describe("Drag and Drop Flow", () => {
   test("Drag and Drop Flow", async ({ page, menusPage, dragDropPage }) => {
-    await page.goto("https://testing.qaautomationlabs.com/");
+    await page.goto("/", {
+      waitUntil: "domcontentloaded",
+    });
     await menusPage.testingMenu.click();
     await expect(menusPage.dashboardBanner).toBeVisible();
     await dragDropPage.dragDropMenu.click();

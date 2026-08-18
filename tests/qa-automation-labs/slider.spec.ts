@@ -2,7 +2,9 @@ import { test, expect } from "../../fixtures/qa-automation-labs/fixtures";
 
 test.describe("Slider Flow", () => {
   test("Slider Flow", async ({ page, menusPage, sliderPage }) => {
-    await page.goto("https://testing.qaautomationlabs.com/");
+    await page.goto("/", {
+      waitUntil: "domcontentloaded",
+    });
     await menusPage.testingMenu.click();
     await expect(menusPage.dashboardBanner).toBeVisible();
     await sliderPage.sliderMenu.click();

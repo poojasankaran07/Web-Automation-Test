@@ -2,7 +2,9 @@ import { test, expect } from "../../fixtures/qa-automation-labs/fixtures";
 
 test.describe("File Upload Flow", () => {
   test("File Upload Flow", async ({ page, menusPage, fileUploadPage }) => {
-    await page.goto("https://testing.qaautomationlabs.com/");
+    await page.goto("/", {
+      waitUntil: "domcontentloaded",
+    });
     await menusPage.testingMenu.click();
     await expect(menusPage.dashboardBanner).toBeVisible();
     await fileUploadPage.uploadMenu.click();

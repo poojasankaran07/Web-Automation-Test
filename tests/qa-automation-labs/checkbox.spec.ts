@@ -1,8 +1,7 @@
 import { test, expect } from "../../fixtures/qa-automation-labs/fixtures";
 
-test.describe.only("CheckBox Flow", () => {
+test.describe("CheckBox Flow", () => {
   test("CheckBox Flow", async ({ page, menusPage, checkBoxPage }) => {
-    // await page.goto("https://testing.qaautomationlabs.com/");
     await page.goto("/", {
       waitUntil: "domcontentloaded",
     });
